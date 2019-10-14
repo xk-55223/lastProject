@@ -58,7 +58,7 @@ public class EntityGenerator {
         StrategyConfig strategy = new StrategyConfig();
         //strategy.setTablePrefix(new String[]{"_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[]{"mtime_film_t"});
+        strategy.setInclude(new String[]{"mtime_banner_t"});
         mpg.setStrategy(strategy);
 
         // 包配置
@@ -67,8 +67,8 @@ public class EntityGenerator {
         pc.setEntity("com.stylefeng.guns.rest.common.persistence.model");
         pc.setMapper("com.stylefeng.guns.rest.common.persistence.dao");
         pc.setXml("com.stylefeng.guns.rest.common.persistence.dao.mapping");
-        pc.setService("com.stylefeng.guns.rest.common.persistence.service");       //本项目没用，生成之后删掉
-        pc.setServiceImpl("com.stylefeng.guns.rest.common.persistence.service.impl");   //本项目没用，生成之后删掉
+        pc.setService("TTT");       //本项目没用，生成之后删掉
+        pc.setServiceImpl("TTT");   //本项目没用，生成之后删掉
         pc.setController("TTT");    //本项目没用，生成之后删掉
         mpg.setPackageInfo(pc);
 
