@@ -1,4 +1,4 @@
-package com.stylefeng.guns.rest.user;
+package com.stylefeng.guns.rest.user.service;
 
 /**
  * @author: jia.xue
