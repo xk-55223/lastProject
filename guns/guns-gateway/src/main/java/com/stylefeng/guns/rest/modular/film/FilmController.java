@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("film")
 public class FilmController {
-    @Reference(interfaceClass = FilmService.class)
+    @Reference(interfaceClass = FilmService.class,check = false)
     FilmService filmService;
     @RequestMapping("getIndex")
     public BaseRespVO getIndex(){
         BaseRespVO respVO = new BaseRespVO();
-        return respVO;
+        return respVO.ok(filmService.getIndex());
     }
 
 }
