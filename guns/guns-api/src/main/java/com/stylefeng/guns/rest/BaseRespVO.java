@@ -1,11 +1,11 @@
 package com.stylefeng.guns.rest;
 
 public class BaseRespVO<T> {
-    Integer status;
-    Integer nowPage;
-    Integer totalPage;
-    String msg;
-    String imgPre;
+    private Integer status;
+    private Integer nowPage;
+    private Integer totalPage;
+    private String msg;
+    private String imgPre;
     T data;
 
     public Integer getStatus() {
