@@ -88,6 +88,7 @@ public class MtimeFilmT extends Model<MtimeFilmT> {
     private Integer filmStatus;
 
 
+
     public Integer getUuid() {
         return uuid;
     }
