@@ -13,8 +13,8 @@ import java.io.Serializable;
  * 用户表
  * </p>
  *
- * @author xkkk
- * @since 2019-10-12
+ * @author lanjiaqi
+ * @since 2019-10-13
  */
 @TableName("mtime_user_t")
 public class MtimeUserT extends Model<MtimeUserT> {

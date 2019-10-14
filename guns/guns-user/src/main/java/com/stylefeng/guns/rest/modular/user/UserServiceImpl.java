@@ -1,4 +1,4 @@
-package com.stylefeng.guns.rest.common.persistence.service.impl;
+package com.stylefeng.guns.rest.modular.user;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeUserTMapper;
@@ -9,15 +9,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Service(interfaceClass = UserService.class)
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     @Autowired
     private MtimeUserTMapper mtimeUserTMapper;
 
     @Override
-    public String getNameById(Integer id) {
-
-        MtimeUserT mtimeUserT = mtimeUserTMapper.selectById(id);
-        String userName = mtimeUserT.getUserName();
-        return userName;
+    public String getUserNameById(Integer id) {
+        MtimeUserT user = mtimeUserTMapper.selectById(id);
+        return user.getUserName();
     }
 }
