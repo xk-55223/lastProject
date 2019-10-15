@@ -46,3 +46,7 @@ logging:
   level.com.stylefeng: debug
   path: logs/
   file: guns-film.log
+
+
+pagehelper:
+  helper-dialect: mysql

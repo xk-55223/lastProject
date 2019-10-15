@@ -51,5 +51,24 @@
         SELECT UUID,show_name FROM `mtime_cat_dict_t`
     </select>
 
+    <select id="getFilmsList" resultType="com.stylefeng.guns.rest.film.vo.FilmInfo" >
+         SELECT UUID as filmId,film_name as filmName
+         ,film_score as filmScore,film_type as filmType
+         ,img_address as imgAddress FROM `mtime_film_t`
+          <where>
+              <if test="res.cat != '#99#'">
+                  and film_cats like '%#{res.cat}%'
+              </if>
+              <if test="res.yearId!=99">
+                  and film_date = #{res.yearId}
+              </if>
+              <if test="res.sourceId!=99">
+                  and film_source = #{res.sourceId}
+              </if>
+          </where>
+         order by #{res.s} desc
+
+    </select>
+
 
 </mapper>

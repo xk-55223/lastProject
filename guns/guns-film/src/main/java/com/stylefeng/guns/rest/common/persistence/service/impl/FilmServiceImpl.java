@@ -1,6 +1,8 @@
 package com.stylefeng.guns.rest.common.persistence.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.stylefeng.guns.rest.common.persistence.dao.FilmMapper;
 import com.stylefeng.guns.rest.film.FilmService;
 import com.stylefeng.guns.rest.film.vo.*;
@@ -100,6 +102,27 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public List<YearInfoVo> selectyearInfo(String id) {
         return null;
+    }
+
+    @Override
+    public FilmQueryVo getFilmsList(FilmRequestVo filmRes) {
+        PageHelper.startPage(filmRes.getNowPage(),filmRes.getPageSize());
+        FilmQueryVo filmQueryVo = new FilmQueryVo();
+        String s = null;
+        switch(filmRes.getSortId()){
+            case 1: s ="film_box_office";break;
+            case 2: s ="film_time";break;
+            case 3: s ="film_score";break;
+        }
+        filmRes.setS(s);
+        filmRes.setCat("#"+filmRes.getCatId()+"#");
+       List<FilmInfo> data =  filmMapper.getFilmsList(filmRes);
+        PageInfo<FilmInfo> filmInfoPageInfo = new PageInfo<>(data);
+        int pages = filmInfoPageInfo.getPages();
+        filmQueryVo.setTotalPage(pages);
+        filmQueryVo.setNowPage(filmRes.getNowPage());
+        filmQueryVo.setData(data);
+        return filmQueryVo;
     }
 
 }
