@@ -20,7 +20,7 @@ public class FilmController {
     @RequestMapping("getIndex")
     public BaseRespVO getIndex(){
         BaseRespVO respVO = new BaseRespVO();
-        return respVO;
+        return respVO.ok(filmService.getIndex());
     }
 
 }

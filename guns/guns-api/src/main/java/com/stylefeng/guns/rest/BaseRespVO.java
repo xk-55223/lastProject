@@ -1,5 +1,6 @@
 package com.stylefeng.guns.rest;
 
+
 public class BaseRespVO<T> {
     private Integer status;
     private Integer nowPage;
@@ -58,6 +59,13 @@ public class BaseRespVO<T> {
 
     public static BaseRespVO ok(Object data) {
         BaseRespVO baseRespVO = new BaseRespVO<>();
+        baseRespVO.setData(data);
+        return baseRespVO;
+    }
+
+    public static BaseRespVO fail(Object data) {
+        BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
+        baseRespVO.setStatus(1);
         baseRespVO.setData(data);
         baseRespVO.setStatus(0);
         return baseRespVO;
