@@ -3,6 +3,8 @@ package com.stylefeng.guns.rest.modular.film;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.rest.BaseRespVO;
 import com.stylefeng.guns.rest.film.FilmService;
+import com.stylefeng.guns.rest.film.vo.FilmQueryVo;
+import com.stylefeng.guns.rest.film.vo.FilmRequestVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,22 @@ public class FilmController {
     @RequestMapping("getIndex")
     public BaseRespVO getIndex(){
         BaseRespVO respVO = new BaseRespVO();
+        return respVO.ok(filmService.getIndex());
+    }
+
+    @RequestMapping("getConditionList")
+    public BaseRespVO getConditionList(String catId,String sourceId,String yearId){
+        BaseRespVO respVO = new BaseRespVO();
+        return respVO.ok(filmService.getConditionList(catId,sourceId,yearId));
+    }
+
+    @RequestMapping("getFilms")
+    public BaseRespVO getFilmsList(FilmRequestVo filmRes){
+        FilmQueryVo filmsList = filmService.getFilmsList(filmRes);
+        BaseRespVO respVO = BaseRespVO.ok(filmsList);
+        respVO.setImgPre(filmsList.getImgPre());
+        respVO.setTotalPage(filmsList.getTotalPage());
+        respVO.setNowPage(filmRes.getNowPage());
         return respVO;
     }
 
