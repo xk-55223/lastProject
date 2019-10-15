@@ -1,5 +1,8 @@
 package com.stylefeng.guns.rest.cinema.service;
 
+import com.stylefeng.guns.rest.cinema.bean.FieldInfoVO;
+
 public interface CinemaService {
-    String selectNameById(Integer id);
+
+    FieldInfoVO getFields(Integer cinemaId);
 }
