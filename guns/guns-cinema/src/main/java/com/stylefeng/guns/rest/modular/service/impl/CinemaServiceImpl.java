@@ -7,7 +7,6 @@ import com.stylefeng.guns.rest.common.persistence.dao.MtimeCinemaTMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 @Component
 @Service(interfaceClass = CinemaService.class)
@@ -24,10 +23,24 @@ public class CinemaServiceImpl implements CinemaService {
             List<FieldVO> fields = getFilmFields(cinemaId,fieldFilmInfoVO.getFilmId());
             fieldFilmInfoVO.setFilmFields(fields);
         }
+
         FieldInfoVO fieldInfoVO = new FieldInfoVO();
         fieldInfoVO.setCinemaInfo(cinemaVO);
         fieldInfoVO.setFilmList(filmList);
         return fieldInfoVO;
+
+    }
+
+    @Override
+    public FieldDetailInfoVO getFieldInfo(Integer cinemaId, Integer fieldId) {
+        FieldCinemaVO cinemaInfo = cinemaTMapper.selectCinemaInfoById(cinemaId);
+        FieldFilmInfoVO filmInfo = cinemaTMapper.selectFieldFilmInfoVO(cinemaId,fieldId);
+        HallInfoVO hallInfo = cinemaTMapper.selectHallInfo(fieldId);
+        FieldDetailInfoVO fieldDetailInfoVO = new FieldDetailInfoVO();
+        fieldDetailInfoVO.setCinemaInfo(cinemaInfo);
+        fieldDetailInfoVO.setFilmInfo(filmInfo);
+        fieldDetailInfoVO.setHallInfo(hallInfo);
+        return fieldDetailInfoVO;
     }
 
     private List<FieldVO> getFilmFields(Integer cinemaId, Integer filmId) {
