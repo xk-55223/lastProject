@@ -3,7 +3,7 @@
 <mapper namespace="com.stylefeng.guns.rest.common.persistence.dao.MtimeCinemaTMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.common.persistence.model.MtimeCinemaT">
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.cinema.bean.MtimeCinemaT">
     <id column="UUID" property="uuid" />
     <result column="cinema_name" property="cinemaName" />
     <result column="cinema_phone" property="cinemaPhone" />
@@ -15,6 +15,4 @@
     <result column="minimum_price" property="minimumPrice" />
 </resultMap>
 
-    <select id=""
-   as wo
 </mapper>
