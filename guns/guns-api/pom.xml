@@ -29,6 +29,7 @@
             <groupId>com.stylefeng</groupId>
             <artifactId>guns-core</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>

@@ -58,7 +58,7 @@ public class BaseRespVO<T> {
     }
 
     public static BaseRespVO ok(Object data) {
-        BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
+        BaseRespVO baseRespVO = new BaseRespVO<>();
         baseRespVO.setData(data);
         return baseRespVO;
     }
@@ -67,6 +67,7 @@ public class BaseRespVO<T> {
         BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
         baseRespVO.setStatus(1);
         baseRespVO.setData(data);
+        baseRespVO.setStatus(0);
         return baseRespVO;
     }
 }

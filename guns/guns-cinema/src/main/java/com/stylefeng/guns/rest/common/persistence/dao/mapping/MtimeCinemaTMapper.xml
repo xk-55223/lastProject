@@ -3,7 +3,7 @@
 <mapper namespace="com.stylefeng.guns.rest.common.persistence.dao.MtimeCinemaTMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.common.persistence.model.MtimeCinemaT">
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.cinema.bean.MtimeCinemaT">
     <id column="UUID" property="uuid" />
     <result column="cinema_name" property="cinemaName" />
     <result column="cinema_phone" property="cinemaPhone" />
@@ -15,6 +15,43 @@
     <result column="minimum_price" property="minimumPrice" />
 </resultMap>
 
-    <select id=""
-   as wo
+    <resultMap id="FieldFilmInfoMap" type="com.stylefeng.guns.rest.cinema.bean.FieldFilmInfoVO">
+        <result column="filmId" property="filmId"/>
+        <result column="filmCats" property="filmCats"/>
+        <result column="filmLength" property="filmLength"/>
+        <result column="filmName" property="filmName"/>
+        <result column="filmType" property="filmType"/>
+        <result column="imgAddress" property="imgAddress"/>
+        <collection property="filmFields" column=""  select=""/>
+    </resultMap>
+
+    <select id="selectFieldFilmInfoVOs" resultMap="FieldFilmInfoMap">
+        select
+        distinct actors,film_cats as filmCats
+        ,ft.film_id as filmId
+        , film_length as filmLength
+        , film_name as filmName
+        , film_language as filmType
+        , hfit.img_address as imgAddress
+        from mtime_cinema_t ct
+        RIGHT JOIN mtime_field_t ft on ct.UUID = ft.cinema_id
+        RIGHT JOIN mtime_hall_film_info_t hfit on ft.film_id = hfit.film_id
+        <where>
+            <if test="cinemaId != null and cinemaId != 0">
+               ct.UUID = #{cinemaId}
+            </if>
+        </where>
+    </select>
+    <select id="selectFilmFields" resultType="com.stylefeng.guns.rest.cinema.bean.FieldVO">
+      select distinct ft.UUID as fieldId, begin_time as beginTime , end_time as endTime , hall_name as hallName , price , film_language as `language` from mtime_field_t ft
+      RIGHT JOIN mtime_hall_film_info_t hfit on ft.film_id = hfit.film_id
+      <where>
+          <if test="cinemaId != null">
+              ft.cinema_id = #{cinemaId}
+          </if>
+          <if test="filmId != null">
+              and ft.film_id = #{filmId}
+          </if>
+      </where>
+    </select>
 </mapper>
