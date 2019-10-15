@@ -3,6 +3,7 @@ package com.stylefeng.guns.rest.common.persistence.dao;
 import com.stylefeng.guns.rest.common.persistence.model.MtimeBannerT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.stylefeng.guns.rest.film.vo.BannerVo;
+import com.stylefeng.guns.rest.film.vo.CatInfoVo;
 import com.stylefeng.guns.rest.film.vo.FilmInfo;
 import com.stylefeng.guns.rest.film.vo.FilmVo;
 
@@ -23,4 +24,5 @@ public interface FilmMapper extends BaseMapper<MtimeBannerT> {
     List<FilmInfo> selectTop100();
     List<FilmInfo> selectFilmInfoByStatus(int id);
     int countFilmStatus(int id);
+    List<CatInfoVo> selectcatInfo(String id);
 }

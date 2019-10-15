@@ -1,9 +1,6 @@
 package com.stylefeng.guns.rest.film;
 
-import com.stylefeng.guns.rest.film.vo.BannerVo;
-import com.stylefeng.guns.rest.film.vo.FilmIndexVo;
-import com.stylefeng.guns.rest.film.vo.FilmInfo;
-import com.stylefeng.guns.rest.film.vo.FilmVo;
+import com.stylefeng.guns.rest.film.vo.*;
 
 import java.util.List;
 
@@ -14,5 +11,9 @@ public interface FilmService {
     FilmVo getSoonFilms();
     List<FilmInfo> getBoxRanking();
     List<FilmInfo> getExpectRanking();
-    List<FilmInfo> getTop100();;
+    List<FilmInfo> getTop100();
+    ConditionVo getConditionList(String catId, String sourceId, String yearId);
+    List<CatInfoVo> selectcatInfo(String id);
+    List<SourceInfoVo> selectsourceInfo(String id);
+    List<YearInfoVo> selectyearInfo(String id);
 }
