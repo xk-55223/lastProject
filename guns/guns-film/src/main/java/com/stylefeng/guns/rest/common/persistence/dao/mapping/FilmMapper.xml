@@ -43,5 +43,13 @@
         SELECT COUNT(UUID) from mtime_film_t WHERE film_status = #{id}
     </select>
 
+    <resultMap id="catInfo" type="com.stylefeng.guns.rest.film.vo.CatInfoVo">
+        <id property="catId" column="UUID"/>
+        <result property="catName" column="show_name"/>
+    </resultMap>
+    <select id="selectcatInfo" resultMap="catInfo">
+        SELECT UUID,show_name FROM `mtime_cat_dict_t`
+    </select>
+
 
 </mapper>

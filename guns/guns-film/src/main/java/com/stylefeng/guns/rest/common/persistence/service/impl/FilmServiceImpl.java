@@ -3,10 +3,7 @@ package com.stylefeng.guns.rest.common.persistence.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.stylefeng.guns.rest.common.persistence.dao.FilmMapper;
 import com.stylefeng.guns.rest.film.FilmService;
-import com.stylefeng.guns.rest.film.vo.BannerVo;
-import com.stylefeng.guns.rest.film.vo.FilmIndexVo;
-import com.stylefeng.guns.rest.film.vo.FilmInfo;
-import com.stylefeng.guns.rest.film.vo.FilmVo;
+import com.stylefeng.guns.rest.film.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -65,4 +62,44 @@ public class FilmServiceImpl implements FilmService {
     public List<FilmInfo> getTop100() {
         return filmMapper.selectTop100();
     }
+
+    @Override
+    public ConditionVo getConditionList(String catId, String sourceId, String yearId) {
+        if (catId == null){
+            catId = "99";
+        }
+        if (sourceId == null){
+            sourceId =  "99";
+        }
+        if (yearId == null){
+            yearId =  "99";
+        }
+        ConditionVo conditionVo = new ConditionVo();
+        conditionVo.setCatInfoV(this.selectcatInfo(catId));
+        conditionVo.setSourceInfo(this.selectsourceInfo(sourceId));
+        conditionVo.setYearInfo(this.selectyearInfo(yearId));
+        return conditionVo;
+    }
+
+    @Override
+    public List<CatInfoVo> selectcatInfo(String id) {
+        List<CatInfoVo> catInfoVos = filmMapper.selectcatInfo(id);
+        for (CatInfoVo catInfoVo : catInfoVos) {
+            if (catInfoVo.getCatId().equals(id)){
+                catInfoVo.setActive(true);
+            }
+        }
+        return catInfoVos;
+    }
+
+    @Override
+    public List<SourceInfoVo> selectsourceInfo(String id) {
+        return null;
+    }
+
+    @Override
+    public List<YearInfoVo> selectyearInfo(String id) {
+        return null;
+    }
+
 }
