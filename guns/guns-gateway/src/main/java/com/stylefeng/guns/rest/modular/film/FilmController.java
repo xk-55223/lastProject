@@ -20,7 +20,12 @@ public class FilmController {
     @RequestMapping("getIndex")
     public BaseRespVO getIndex(){
         BaseRespVO respVO = new BaseRespVO();
-        return respVO;
+        return respVO.ok(filmService.getIndex());
+    }
+    @RequestMapping("getConditionList")
+    public BaseRespVO getConditionList(String catId,String sourceId,String yearId){
+        BaseRespVO respVO = new BaseRespVO();
+        return respVO.ok(filmService.getConditionList(catId,sourceId,yearId));
     }
 
 }

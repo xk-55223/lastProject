@@ -15,4 +15,94 @@
     <result column="minimum_price" property="minimumPrice" />
 </resultMap>
 
+    <resultMap id="FieldFilmInfoMap" type="com.stylefeng.guns.rest.cinema.bean.FieldFilmInfoVO">
+        <result column="filmId" property="filmId"/>
+        <result column="filmCats" property="filmCats"/>
+        <result column="filmLength" property="filmLength"/>
+        <result column="filmName" property="filmName"/>
+        <result column="filmType" property="filmType"/>
+        <result column="imgAddress" property="imgAddress"/>
+        <collection property="filmFields" column=""  select=""/>
+    </resultMap>
+
+    <select id="selectFieldFilmInfoVOs" resultMap="FieldFilmInfoMap">
+        select
+        distinct actors,film_cats as filmCats
+        ,ft.film_id as filmId
+        , film_length as filmLength
+        , film_name as filmName
+        , film_language as filmType
+        , hfit.img_address as imgAddress
+        from mtime_cinema_t ct
+        RIGHT JOIN mtime_field_t ft on ct.UUID = ft.cinema_id
+        RIGHT JOIN mtime_hall_film_info_t hfit on ft.film_id = hfit.film_id
+        <where>
+            <if test="cinemaId != null and cinemaId != 0">
+               ct.UUID = #{cinemaId}
+            </if>
+        </where>
+    </select>
+    <select id="selectFilmFields" resultType="com.stylefeng.guns.rest.cinema.bean.FieldVO">
+      select distinct ft.UUID as fieldId, begin_time as beginTime , end_time as endTime , hall_name as hallName , price , film_language as `language` from mtime_field_t ft
+      RIGHT JOIN mtime_hall_film_info_t hfit on ft.film_id = hfit.film_id
+      <where>
+          <if test="cinemaId != null">
+              ft.cinema_id = #{cinemaId}
+          </if>
+          <if test="filmId != null">
+              and ft.film_id = #{filmId}
+          </if>
+      </where>
+    </select>
+    <select id="selectCinemaInfoById" resultType="com.stylefeng.guns.rest.cinema.bean.FieldCinemaVO">
+        select UUID as cinemaId, cinema_name as cinemaName, cinema_phone as cinemaPhone
+        , cinema_address as cinemaAdress, img_address as imgUrl
+        from mtime_cinema_t
+        <where>
+            <if test="cinemaId != null">
+                UUID = #{cinemaId}
+            </if>
+        </where>
+    </select>
+    <select id="selectFieldFilmInfoVO" resultType="com.stylefeng.guns.rest.cinema.bean.FieldFilmInfoVO">
+        select
+        distinct actors,film_cats as filmCats
+        ,ft.film_id as filmId
+        , film_length as filmLength
+        , film_name as filmName
+        , film_language as filmType
+        , hfit.img_address as imgAddress
+        from mtime_cinema_t ct
+        RIGHT JOIN mtime_field_t ft on ct.UUID = ft.cinema_id
+        RIGHT JOIN mtime_hall_film_info_t hfit on ft.film_id = hfit.film_id
+		<where>
+            <if test="fieldId != null">
+                ft.UUID = #{fieldId}
+            </if>
+            <if test="cinemaId != null">
+                and ct.UUID = #{cinemaId}
+            </if>
+        </where>
+    </select>
+    <select id="selectHallInfo" resultType="com.stylefeng.guns.rest.cinema.bean.HallInfoVO">
+        select ft.UUID as hallFieldId, ft.hall_name as hallName
+        ,ft.price as price , hdt.seat_address as seatFile
+        from
+        mtime_field_t ft LEFT JOIN mtime_hall_dict_t hdt
+        on ft.hall_id = hdt.UUID
+        <where>
+            <if test="fieldId != null">
+                ft.UUID = #{fieldId}
+            </if>
+        </where>
+    </select>
+    <select id="selectArea" resultType="com.stylefeng.guns.rest.cinema.bean.AreaVo">
+        select UUID as areaId, show_name as areaName from mtime_area_dict_t
+    </select>
+    <select id="selectBrand" resultType="com.stylefeng.guns.rest.cinema.bean.BrandVo">
+        select UUID as brandId, show_name as brandName from mtime_brand_dict_t
+    </select>
+    <select id="selectHallype" resultType="com.stylefeng.guns.rest.cinema.bean.HalltypeVo">
+        select UUID as halltypeId, show_name as halltypeName from mtime_hall_dict_t
+    </select>
 </mapper>
