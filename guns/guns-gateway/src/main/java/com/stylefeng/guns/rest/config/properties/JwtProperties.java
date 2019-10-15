@@ -25,6 +25,16 @@ public class JwtProperties {
 
     private String md5Key = "randomKey";
 
+    private String greenLight = "";
+
+    public String getGreenLight() {
+        return greenLight;
+    }
+
+    public void setGreenLight(String greenLight) {
+        this.greenLight = greenLight;
+    }
+
     public static String getJwtPrefix() {
         return JWT_PREFIX;
     }

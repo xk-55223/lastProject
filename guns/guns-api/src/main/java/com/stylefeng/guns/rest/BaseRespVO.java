@@ -63,10 +63,16 @@ public class BaseRespVO<T> {
         return baseRespVO;
     }
 
-    public static BaseRespVO fail(Object data) {
+    public static BaseRespVO ok(String msg) {
+        BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
+        baseRespVO.setMsg(msg);
+        return baseRespVO;
+    }
+
+    public static BaseRespVO fail(String msg) {
         BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
         baseRespVO.setStatus(1);
-        baseRespVO.setData(data);
+        baseRespVO.setMsg(msg);
         return baseRespVO;
     }
 }

@@ -13,7 +13,11 @@ public interface UserService {
 
     boolean register(UserRegisterVo registerVo);
 
+    boolean login(String username, String password);
+
     UserInfoVo updateUserInfo(UserInfoVo userInfoVoReq);
+
+    UserInfoVo getUserInfo(Integer userId);
 
     UserInfoVo getUserInfo(String username);
 }
