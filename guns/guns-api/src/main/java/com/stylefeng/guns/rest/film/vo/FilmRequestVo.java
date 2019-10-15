@@ -2,7 +2,6 @@ package com.stylefeng.guns.rest.film.vo;
 
 import lombok.Data;
 import java.io.Serializable;
-
 @Data
 public class FilmRequestVo implements Serializable {
 
@@ -14,7 +13,5 @@ public class FilmRequestVo implements Serializable {
     private Integer yearId = 99;
     private Integer nowPage = 1;
     private Integer pageSize = 18;
-    private String s;
-    private String cat;
 
 }
