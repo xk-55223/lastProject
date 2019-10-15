@@ -2,10 +2,8 @@ package com.stylefeng.guns.rest.common.persistence.dao;
 
 import com.stylefeng.guns.rest.common.persistence.model.MtimeBannerT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.stylefeng.guns.rest.film.vo.BannerVo;
-import com.stylefeng.guns.rest.film.vo.CatInfoVo;
-import com.stylefeng.guns.rest.film.vo.FilmInfo;
-import com.stylefeng.guns.rest.film.vo.FilmVo;
+import com.stylefeng.guns.rest.film.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -25,4 +23,6 @@ public interface FilmMapper extends BaseMapper<MtimeBannerT> {
     List<FilmInfo> selectFilmInfoByStatus(int id);
     int countFilmStatus(int id);
     List<CatInfoVo> selectcatInfo(String id);
+
+    List<FilmInfo> getFilmsList(@Param("res") FilmRequestVo filmRes);
 }
