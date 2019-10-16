@@ -1,10 +1,8 @@
 package com.stylefeng.guns.rest.modular.service.impl;
 
-import com.alibaba.dubbo.common.bytecode.Wrapper;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.alibaba.dubbo.config.annotation.Service;
 import com.stylefeng.guns.rest.cinema.bean.*;
 import com.stylefeng.guns.rest.cinema.service.CinemaService;
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeCinemaTMapper;
@@ -19,11 +17,6 @@ import java.util.List;
 public class CinemaServiceImpl implements CinemaService {
     @Autowired
     MtimeCinemaTMapper cinemaTMapper;
-
-    @Override
-    public String selectNameById(Integer id) {
-        return null;
-    }
 
     @Override
     public CinemaResponseVo getCinemas(CinemaBeanVo cinemaBeanVo) {
