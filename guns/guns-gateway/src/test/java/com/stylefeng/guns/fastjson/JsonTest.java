@@ -5,6 +5,8 @@ import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.rest.common.SimpleObject;
 import com.stylefeng.guns.rest.modular.auth.converter.BaseTransferEntity;
 
+import java.util.ArrayList;
+
 /**
  * json测试
  *
