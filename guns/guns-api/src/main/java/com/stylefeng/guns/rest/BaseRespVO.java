@@ -7,7 +7,7 @@ public class BaseRespVO<T> {
     private Integer totalPage;
     private String msg;
     private String imgPre;
-    T data;
+    Object data;
 
     public Integer getStatus() {
         return status;
@@ -49,25 +49,31 @@ public class BaseRespVO<T> {
         this.imgPre = imgPre;
     }
 
-    public T getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
     public static BaseRespVO ok(Object data) {
-        BaseRespVO baseRespVO = new BaseRespVO<>();
+
+        BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
         baseRespVO.setData(data);
         return baseRespVO;
     }
 
-    public static BaseRespVO fail(Object data) {
+    public static BaseRespVO ok(String msg) {
+        BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
+        baseRespVO.setMsg(msg);
+        return baseRespVO;
+    }
+
+    public static BaseRespVO fail(String msg) {
         BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
         baseRespVO.setStatus(1);
-        baseRespVO.setData(data);
-        baseRespVO.setStatus(0);
+        baseRespVO.setMsg(msg);
         return baseRespVO;
     }
 }

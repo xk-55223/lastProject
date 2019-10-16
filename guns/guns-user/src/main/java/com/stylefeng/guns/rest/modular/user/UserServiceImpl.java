@@ -1,5 +1,6 @@
 package com.stylefeng.guns.rest.modular.user;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeUserTMapper;
@@ -29,6 +30,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean login(String username, String password) {
+        EntityWrapper<MtimeUserT> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("user_name", username);
+        List<MtimeUserT> mtimeUserTS = mtimeUserTMapper.selectList(entityWrapper);
+        if (CollectionUtils.isNotEmpty(mtimeUserTS) && mtimeUserTS.get(0).getUserPwd().equals(password)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean checkUsername(String username) {
         EntityWrapper<MtimeUserT> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("user_name", username);
@@ -37,6 +49,13 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public UserInfoVo getUserInfo(Integer userId) {
+        EntityWrapper<MtimeUserT> entityWrapper = new EntityWrapper<>();
+        entityWrapper.eq("UUID", userId);
+        return MtimeUserT2userInfoVo(mtimeUserTMapper.selectList(entityWrapper).get(0));
     }
 
     @Override

@@ -121,5 +121,4 @@
         select film_imgs FROM `mtime_film_info_t`  WHERE film_id = #{id}
     </select>
 
-
 </mapper>

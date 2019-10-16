@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class UserInfoVo implements Serializable {
-    private static final long serialVersionUID = -7199810079971083231L;
+    private static final long serialVersionUID = 1220033606267062729L;
     private Integer uuid;
     private String username;
     private String nickname;

@@ -17,4 +17,5 @@ public interface FilmService {
     List<SourceInfoVo> selectsourceInfo(String id);
     List<YearInfoVo> selectyearInfo(String id);
     FilmDetailVo getFilmDetail(int searchType);
+    FilmQueryVo getFilmsList(FilmRequestVo filmRes);
 }

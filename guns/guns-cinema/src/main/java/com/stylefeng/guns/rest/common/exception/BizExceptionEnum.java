@@ -20,6 +20,10 @@ public enum BizExceptionEnum implements ServiceExceptionEnum {
      * 签名异常
      */
     SIGN_ERROR(700, "签名验证失败"),
+    /**
+     * 查询异常
+     */
+    QUERY_ERROR(1,"影院信息查询失败"),
 
     /**
      * 其他
