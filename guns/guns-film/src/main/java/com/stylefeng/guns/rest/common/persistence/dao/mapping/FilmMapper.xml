@@ -50,6 +50,76 @@
     <select id="selectcatInfo" resultMap="catInfo">
         SELECT UUID,show_name FROM `mtime_cat_dict_t`
     </select>
+    <resultMap id="sourceInfo" type="com.stylefeng.guns.rest.film.vo.SourceInfoVo">
+        <id property="sourceId" column="UUID"/>
+        <result property="sourceName" column="show_name"/>
+    </resultMap>
+    <select id="selectSourceInfo" resultMap="sourceInfo">
+        SELECT UUID,show_name FROM `mtime_source_dict_t`
+    </select>
+    <resultMap id="yearInfo" type="com.stylefeng.guns.rest.film.vo.YearInfoVo">
+        <id property="yearId" column="UUID"/>
+        <result property="yearName" column="show_name"/>
+    </resultMap>
+    <select id="selectYearInfo" resultMap="yearInfo">
+        SELECT UUID,show_name FROM `mtime_year_dict_t`
+    </select>
+    <resultMap id="getFilmDetail" type="com.stylefeng.guns.rest.film.vo.FilmDetailVo">
+        <result property="filmName" column="film_name"/>
+        <result property="imgAddress" column="img_address"/>
+        <result property="score" column="film_score"/>
+        <result property="totalBox" column="film_box_office"/>
+    </resultMap>
+    <select id="getFilmDetail" resultMap="getFilmDetail">
+        SELECT film_name,img_address,film_score,film_box_office FROM `mtime_film_t` WHERE UUID = #{id}
+    </select>
+    <select id="selectEnName" resultType="java.lang.String">
+        SELECT film_en_name FROM `mtime_film_info_t` WHERE film_id = #{id}
+    </select>
+    <select id="selectScoreNum" resultType="java.lang.String">
+        SELECT film_score_num FROM `mtime_film_info_t` WHERE film_id = #{id}
+    </select>
+    <select id="selectFilmCat" resultType="java.lang.String">
+        SELECT film_cats FROM `mtime_film_t` WHERE UUID = #{id}
+    </select>
+    <select id="selectCatDict" resultType="java.lang.String">
+        SELECT show_name FROM `mtime_cat_dict_t` WHERE UUID = #{id}
+    </select>
+    <select id="selectArea" resultType="java.lang.String">
+        SELECT film_area FROM `mtime_film_t` WHERE UUID = #{id}
+    </select>
+    <select id="selectTime" resultType="java.lang.String">
+        SELECT film_length FROM `mtime_film_info_t`  WHERE film_id = #{id}
+    </select>
+    <select id="selectAreaName" resultType="java.lang.String">
+        SELECT show_name FROM `mtime_source_dict_t` where UUID = #{id}
+    </select>
+    <select id="selectFilmTime" resultType="java.lang.String">
+        SELECT film_time FROM `mtime_film_t` WHERE UUID = #{id}
+    </select>
+    <select id="selectBiography" resultType="java.lang.String">
+        SELECT biography FROM `mtime_film_info_t`  WHERE film_id = #{id}
+    </select>
+    <select id="selectDirectorId" resultType="java.lang.String">
+        select director_id FROM `mtime_film_info_t`  WHERE film_id = #{id}
+    </select>
+    <resultMap id="ActorMap" type="com.stylefeng.guns.rest.film.vo.Actor">
+        <result property="directorName" column="actor_name"/>
+        <result property="imgAddress" column="actor_img"/>
+    </resultMap>
+    <select id="selectActor" resultMap="ActorMap">
+       SELECT actor_name,actor_img FROM mtime_actor_t where UUID = #{id}
+    </select>
+    <resultMap id="actor_FilmMap" type="com.stylefeng.guns.rest.common.persistence.model.Actor_Film">
+        <result property="actorId" column="actor_id"/>
+        <result property="role_name" column="role_name"/>
+    </resultMap>
+    <select id="selectActorId" resultMap="actor_FilmMap">
+        SELECT actor_id,role_name FROM `mtime_film_actor_t` WHERE film_id = #{id}
+    </select>
+    <select id="selectFilmImgs" resultType="java.lang.String">
+        select film_imgs FROM `mtime_film_info_t`  WHERE film_id = #{id}
+    </select>
 
 
 </mapper>

@@ -12,7 +12,8 @@ import java.io.Serializable;
  **/
 @Data
 public class YearInfoVo implements Serializable {
-    Boolean active;
-    String catId;
-    String catName;
+    private static final long serialVersionUID = -8719672446119775996L;
+    boolean active;
+    String yearId;
+    String yearName;
 }
