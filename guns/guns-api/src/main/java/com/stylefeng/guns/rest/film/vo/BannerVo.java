@@ -16,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 public class BannerVo implements Serializable {
+    private static final long serialVersionUID = 1513488442135862592L;
     private String bannerId;
 
     private String bannerAddress;

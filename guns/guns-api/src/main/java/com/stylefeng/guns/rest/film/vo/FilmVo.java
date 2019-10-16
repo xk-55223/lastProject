@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class FilmVo implements Serializable {
+    private static final long serialVersionUID = -752584768257916749L;
     private int filmNum;
     private int nowPage;
     private int totalPage;

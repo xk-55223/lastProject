@@ -12,6 +12,7 @@ import java.io.Serializable;
  **/
 @Data
 public class CatInfoVo implements Serializable {
+    private static final long serialVersionUID = 5534082010241765016L;
     boolean active;
     String catId;
     String catName;

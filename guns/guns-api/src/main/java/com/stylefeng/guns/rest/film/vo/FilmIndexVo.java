@@ -14,6 +14,7 @@ import java.util.List;
  **/
 @Data
 public class FilmIndexVo implements Serializable {
+    private static final long serialVersionUID = 8723544649292326232L;
     private List<BannerVo> banners;
     private FilmVo hotFilms;
     private FilmVo soonFilms;

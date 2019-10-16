@@ -16,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 public class FilmInfo implements Serializable {
+    private static final long serialVersionUID = -2110569484034054255L;
     private String filmId;
     private int filmType;
     private String imgAddress;

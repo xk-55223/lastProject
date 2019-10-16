@@ -12,7 +12,8 @@ import java.io.Serializable;
  **/
 @Data
 public class SourceInfoVo implements Serializable {
-    Boolean active;
+    private static final long serialVersionUID = 7740701653860145937L;
+    boolean active;
     String sourceId;
     String sourceName;
 }

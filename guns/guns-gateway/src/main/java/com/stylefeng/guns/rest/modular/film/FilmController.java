@@ -30,6 +30,11 @@ public class FilmController {
         BaseRespVO respVO = new BaseRespVO();
         return respVO.ok(filmService.getConditionList(catId,sourceId,yearId));
     }
+    @RequestMapping("films")
+    public BaseRespVO ShowFilms(int searchType){
+        BaseRespVO ok = new BaseRespVO().ok(filmService.getFilmDetail(searchType));
+        return ok;
+    }
 
     @RequestMapping("getFilms")
     public BaseRespVO getFilmsList(FilmRequestVo filmRes){
