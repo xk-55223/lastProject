@@ -16,6 +16,26 @@
         <result column="order_user" property="orderUser" />
         <result column="order_status" property="orderStatus" />
     </resultMap>
+    <insert id="insertOrder">
+        insert into mooc_order_t (UUID,cinema_id,field_id,seats_ids,seats_name,film_price,order_price,order_time,order_user,order_status)
+        values (#{order.orderId},#{order.cinemaId},#{order.fieldId},#{order.seatsIds},#{order.seatsName},
+        #{order.filmPrice},#{order.orderPrice},#{order.orderTime},#{order.orderUser},#{order.orderStatus})
+    </insert>
+    <select id="selectFieldById" resultType="com.stylefeng.guns.rest.order.vo.FiledVo">
+        select UUID as filedId,hall_id as hallId from mtime_field_t where UUID = #{fieldId}
+    </select>
+    <select id="selectOrderByFiledId" resultType="com.stylefeng.guns.rest.order.vo.OrderVo">
+        select seats_name as seatsName from mooc_order_t where filed_id = #{fieldId}
+    </select>
+    <select id="selectCinemaIdfromFieldByFieldId" resultType="com.stylefeng.guns.rest.order.vo.FiledVo">
+        select cinema_id as cinemaId,film_id as filmId,price from mtime_field_t where UUID = #{fieldId}
+    </select>
+    <select id="selectCinemaNameById" resultType="com.stylefeng.guns.rest.cinema.bean.MtimeCinemaT">
+        select cinema_name as cinemaName from mtime_cinema_t where UUID = #{cinemaId}
+    </select>
+    <select id="selectFilmNameById" resultType="com.stylefeng.guns.rest.film.vo.FilmInfo">
+        select film_name as filmName from mtime_film_t where UUID = #{filmId}
+    </select>
     <select id="selectOrdersByUsername" resultType="com.stylefeng.guns.rest.order.bean.OrderInfoVO">
       select ot.UUID as orderId,ft.film_name as filmName, fit.begin_time as fieldTime
       , ct.cinema_name as cinemaName,ot.seats_name as seatsName,ot.order_price as orderPrice

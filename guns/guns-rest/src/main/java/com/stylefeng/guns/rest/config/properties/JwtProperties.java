@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author fengshuonan
  * @date 2017-08-23 9:23
- */
+ * H:\stu\code\microservice\project\lastProject\guns\guns-rest\src\main\java\com\stylefeng\guns\rest\config\properties\JwtProperties.java
+*/
 @Configuration
 @ConfigurationProperties(prefix = JwtProperties.JWT_PREFIX)
 public class JwtProperties {

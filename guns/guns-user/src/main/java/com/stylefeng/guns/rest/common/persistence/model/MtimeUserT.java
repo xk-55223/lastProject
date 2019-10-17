@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lanjiaqi
- * @since 2019-10-13
+ * @since 2019-10-17
  */
 @TableName("mtime_user_t")
 public class MtimeUserT extends Model<MtimeUserT> {
