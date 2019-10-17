@@ -6,9 +6,10 @@ import java.io.Serializable;
 
 @Data
 public class CinemaBeanVo implements Serializable {
-    private int brandld;
-    private int hallType;
+    private int brandId;
+    private int halltypeId;
     private int districtId;
+    private int areaId;
     private int pageSize;
     private int nowPage;
 }

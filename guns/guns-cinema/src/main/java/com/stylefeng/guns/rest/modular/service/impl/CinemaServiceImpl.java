@@ -21,13 +21,26 @@ public class    CinemaServiceImpl implements CinemaService {
     @Override
     public CinemaResponseVo getCinemas(CinemaBeanVo cinemaBeanVo) {
         Page page = new Page<>();
-        EntityWrapper<MtimeCinemaT> EntityWrapper = new EntityWrapper<>();
-        List<MtimeCinemaT> mtimeCinemaTS1 = cinemaTMapper.selectPage(page, EntityWrapper);
+        page.setSize(cinemaBeanVo.getPageSize());
+        page.setCurrent(cinemaBeanVo.getNowPage());
+        EntityWrapper<MtimeCinemaT> entityWrapper = new EntityWrapper<>();
+        if (cinemaBeanVo.getBrandId() != 99) {
+            entityWrapper.eq("brand_id",cinemaBeanVo.getBrandId());
+        }
+        if (cinemaBeanVo.getAreaId() != 99) {
+            entityWrapper.eq("area_id",cinemaBeanVo.getBrandId());
+        }
+        if (cinemaBeanVo.getHalltypeId() != 99) {
+            entityWrapper.like("hall_ids","#" + cinemaBeanVo.getHalltypeId() + "#");
+        }
+        List<MtimeCinemaT> mtimeCinemaTS1 = cinemaTMapper.selectPage(page, entityWrapper);
         long total = page.getTotal();
         CinemaResponseVo cinemaResponseVo = new CinemaResponseVo();
         cinemaResponseVo.setMtimeCinemaTS(mtimeCinemaTS1);
         cinemaResponseVo.setNowPage(cinemaBeanVo.getNowPage());
-        cinemaResponseVo.setTotalPage((int) total);
+        int pageSize = cinemaBeanVo.getPageSize();
+        double totalPage = total * 1.0 / pageSize;
+        cinemaResponseVo.setTotalPage((int) Math.ceil(totalPage));
 
         return cinemaResponseVo;
     }

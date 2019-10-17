@@ -46,7 +46,7 @@ public class AuthController {
             System.out.println(jedis.get("myKey"));
             System.out.println(jedis.get(token));
             System.out.println(token);
-            jedis.expire(token, 360);
+            jedis.expire(token, 3600);
             return BaseRespVO.ok(new AuthResponse(token, randomKey));
         } else {
             return BaseRespVO.fail("用户名或密码错误");

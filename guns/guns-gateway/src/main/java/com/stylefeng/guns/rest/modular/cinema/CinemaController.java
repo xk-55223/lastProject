@@ -41,6 +41,10 @@ public class CinemaController {
 
         cinemaInfoVos = service.getCinemas(cinemaBeanVo);
 
+        if (cinemaBeanVo == null) {
+            return BaseRespVO.fail("影院信息查询失败");
+        }
+
         BaseRespVO ok = BaseRespVO.ok(cinemaInfoVos.getMtimeCinemaTS());
         ok.setTotalPage(cinemaInfoVos.getTotalPage());
         ok.setNowPage(cinemaBeanVo.getNowPage());
