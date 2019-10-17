@@ -22,14 +22,12 @@ public class CinemaController {
 
     CinemaService service;
 
-    CinemaService cinemaServiceService;
-
 
     private final String IMG_PRE = "http://img.meetingshop.cn/";
 
     @RequestMapping("getFields")
     public BaseRespVO getFields(Integer cinemaId) {
-        FieldInfoVO fieldInfoVO = cinemaServiceService.getFields(cinemaId);
+        FieldInfoVO fieldInfoVO = service.getFields(cinemaId);
         BaseRespVO respVO = BaseRespVO.ok(fieldInfoVO);
         respVO.setImgPre(IMG_PRE);
         return respVO;
@@ -43,7 +41,7 @@ public class CinemaController {
 
         cinemaInfoVos = service.getCinemas(cinemaBeanVo);
 
-        BaseRespVO ok = BaseRespVO.ok(cinemaInfoVos);
+        BaseRespVO ok = BaseRespVO.ok(cinemaInfoVos.getMtimeCinemaTS());
         ok.setTotalPage(cinemaInfoVos.getTotalPage());
         ok.setNowPage(cinemaBeanVo.getNowPage());
         if(cinemaBeanVo.getNowPage()==0){
@@ -62,7 +60,7 @@ public class CinemaController {
     }
     @RequestMapping("getFieldInfo")
     public BaseRespVO getFieldInfo(Integer cinemaId, Integer fieldId) {
-        FieldDetailInfoVO fieldDetailInfoVO = cinemaServiceService.getFieldInfo(cinemaId,fieldId);
+        FieldDetailInfoVO fieldDetailInfoVO = service.getFieldInfo(cinemaId,fieldId);
         BaseRespVO respVO = BaseRespVO.ok(fieldDetailInfoVO);
         respVO.setImgPre(IMG_PRE);
         return respVO;

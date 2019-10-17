@@ -39,7 +39,7 @@ public class FilmController {
     @RequestMapping("getFilms")
     public BaseRespVO getFilmsList(FilmRequestVo filmRes){
         FilmQueryVo filmsList = filmService.getFilmsList(filmRes);
-        BaseRespVO respVO = BaseRespVO.ok(filmsList);
+        BaseRespVO respVO = BaseRespVO.ok(filmsList.getData());
         respVO.setImgPre(filmsList.getImgPre());
         respVO.setTotalPage(filmsList.getTotalPage());
         respVO.setNowPage(filmRes.getNowPage());

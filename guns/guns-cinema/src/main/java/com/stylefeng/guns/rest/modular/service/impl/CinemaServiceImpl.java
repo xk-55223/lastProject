@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @Service(interfaceClass = CinemaService.class)
-public class CinemaServiceImpl implements CinemaService {
+public class    CinemaServiceImpl implements CinemaService {
     @Autowired
     MtimeCinemaTMapper cinemaTMapper;
 
