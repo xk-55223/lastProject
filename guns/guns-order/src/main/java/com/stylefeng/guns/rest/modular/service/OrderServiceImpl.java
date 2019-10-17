@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @Component
 @Service(interfaceClass = OrderService.class)
-public class OrderServiceImp implements OrderService {
+public class OrderServiceImpl implements OrderService {
     @Autowired
     MoocOrderTMapper orderTMapper;
     @Autowired
