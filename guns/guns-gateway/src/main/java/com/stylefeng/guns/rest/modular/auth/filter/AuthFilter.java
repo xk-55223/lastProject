@@ -64,7 +64,7 @@ public class AuthFilter extends OncePerRequestFilter {
                 RenderUtil.renderJson(response, new ErrorTip(BizExceptionEnum.TOKEN_EXPIRED.getCode(), BizExceptionEnum.TOKEN_EXPIRED.getMessage()));
                 return;
             } else {
-                jedis.expire(authToken, 360);
+                jedis.expire(authToken, 3600);
             }
         } else {
             //header没有带Bearer字段
