@@ -43,7 +43,7 @@ public class CinemaController {
 
         cinemaInfoVos = service.getCinemas(cinemaBeanVo);
 
-        BaseRespVO ok = BaseRespVO.ok(cinemaInfoVos);
+        BaseRespVO ok = BaseRespVO.ok(cinemaInfoVos.getMtimeCinemaTS());
         ok.setTotalPage(cinemaInfoVos.getTotalPage());
         ok.setNowPage(cinemaBeanVo.getNowPage());
         if(cinemaBeanVo.getNowPage()==0){
