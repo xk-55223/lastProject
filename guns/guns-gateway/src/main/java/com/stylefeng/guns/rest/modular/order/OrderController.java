@@ -12,16 +12,32 @@ import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
+import com.stylefeng.guns.rest.order.OrderService;
+import com.stylefeng.guns.rest.pay.service.PayService;
+import com.stylefeng.guns.rest.pay.vo.OrderPayInfo;
+import com.stylefeng.guns.rest.pay.vo.PayInfoVo;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import com.stylefeng.guns.rest.PageInfoVO;
+import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
+import com.stylefeng.guns.rest.order.bean.OrderInfoVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("order")
 public class OrderController {
-    @Autowired
-    Jedis jedis;
     @Reference(interfaceClass = OrderService.class, check = false)
     OrderService orderService;
     @Autowired
     JwtProperties jwtProperties;
+    @Reference(interfaceClass = PayService.class, check = false)
+    PayService payService;
+    @Autowired
+    Jedis jedis;
 
     @RequestMapping("buyTickets")
     public BaseRespVO insertOrder(Integer fieldId, String soldSeats, String seatsName, HttpServletRequest request) {
@@ -33,9 +49,38 @@ public class OrderController {
             //验证token是否过期,包含了验证jwt是否正确
             userId = Integer.valueOf(jedis.get(authToken));
         }
-            OrderVo orderVo = orderService.saveOrderInfo(fieldId, soldSeats, seatsName, userId);
-            BaseRespVO ok = BaseRespVO.ok(orderVo);
-            return ok;
+        OrderVo orderVo = orderService.saveOrderInfo(fieldId, soldSeats, seatsName, userId);
+        BaseRespVO ok = BaseRespVO.ok(orderVo);
+        return ok;
+    }
 
+
+    @RequestMapping(value = "getPayInfo", method = RequestMethod.POST)
+    public BaseRespVO getPayInfo(String orderId) {
+        PayInfoVo payInfoVo = payService.getPayInfo(orderId);
+        if (payInfoVo.getQRCodeAddress() != null) {
+            BaseRespVO ok = BaseRespVO.ok(payInfoVo);
+            ok.setImgPre("D:/");
+            return ok;
+        } else {
+            return BaseRespVO.fail("订单支付失败，请稍后重试");
+        }
+    }
+
+    @RequestMapping(value = "getPayResult", method = RequestMethod.POST)
+    public BaseRespVO getPayResult(String orderId, Integer tryNums) {
+        if (tryNums > 3) {
+            return BaseRespVO.fail("订单支付失败，请稍后重试");
+        }
+        OrderPayInfo orderPayInfo = payService.getPayResult(orderId);
+        return BaseRespVO.ok(orderPayInfo);
+    }
+
+    @RequestMapping("getOrderInfo")
+    public BaseRespVO getOrderInfo(PageInfoVO pageInfo, String token) {
+        String usernameFromToken = new JwtTokenUtil().getUsernameFromToken(token);
+        String username = jedis.get(usernameFromToken);
+        List<OrderInfoVO> orders = orderService.getOrderInfo(username);
+        return BaseRespVO.ok(orders);
     }
 }

@@ -7,6 +7,7 @@ import com.stylefeng.guns.rest.film.vo.FilmInfo;
 import com.stylefeng.guns.rest.order.vo.FiledVo;
 import com.stylefeng.guns.rest.order.vo.OrderVo;
 import org.apache.ibatis.annotations.Param;
+import com.stylefeng.guns.rest.order.bean.OrderInfoVO;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public interface MoocOrderTMapper extends BaseMapper<MoocOrderT> {
 
+
     FiledVo selectFieldById(@Param("fieldId") String fieldId);
 
     List<OrderVo> selectOrderByFiledId(@Param("fieldId") String fieldId);
@@ -31,4 +33,7 @@ public interface MoocOrderTMapper extends BaseMapper<MoocOrderT> {
     FilmInfo selectFilmNameById(@Param("filmId") int filmId);
 
     void insertOrder(@Param("order") OrderVo orderVo);
+
+    List<OrderInfoVO> selectOrdersByUsername(String username);
+
 }

@@ -60,6 +60,7 @@ public class BaseRespVO<T> {
     public static BaseRespVO ok(Object data) {
 
         BaseRespVO<Object> baseRespVO = new BaseRespVO<>();
+        baseRespVO.setStatus(0);
         baseRespVO.setData(data);
         return baseRespVO;
     }

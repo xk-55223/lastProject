@@ -1,7 +1,10 @@
 package com.stylefeng.guns.rest.order;
 
+
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.rest.order.vo.OrderVo;
+import com.stylefeng.guns.rest.order.bean.OrderInfoVO;
+import java.util.List;
 
 public interface OrderService {
 
@@ -11,7 +14,7 @@ public interface OrderService {
 
     OrderVo saveOrderInfo(Integer fields,String soldSeats,String seatsName,Integer userId);
 
-    Page<OrderVo> getOrderByUserId(Integer userId, Page<OrderVo> page);
 
-    String getSoldSeatsByFieldId(Integer fieldId);
+    List<OrderInfoVO> getOrderInfo(String username);
+
 }

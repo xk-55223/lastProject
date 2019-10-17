@@ -8,6 +8,7 @@ import com.stylefeng.guns.rest.common.persistence.dao.MoocOrderTMapper;
 import com.stylefeng.guns.rest.film.vo.FilmInfo;
 import com.stylefeng.guns.rest.film.vo.FilmVo;
 import com.stylefeng.guns.rest.order.OrderService;
+import com.stylefeng.guns.rest.order.bean.OrderInfoVO;
 import com.stylefeng.guns.rest.order.vo.FiledVo;
 import com.stylefeng.guns.rest.order.vo.OrderVo;
 import io.jsonwebtoken.JwtException;
@@ -121,6 +122,11 @@ public class OrderServiceImpl implements OrderService {
         return orderVo;
     }
 
+    @Override
+    public List<OrderInfoVO> getOrderInfo(String username) {
+        return null;
+    }
+
     private void jedisAddSeat() {
         redisTemplate.opsForValue().set("seat","1排1座");
         redisTemplate.opsForValue().set("seat","1排2座");
@@ -148,13 +154,4 @@ public class OrderServiceImpl implements OrderService {
         redisTemplate.opsForValue().set("seat","4排6座");
     }
 
-    @Override
-    public Page<OrderVo> getOrderByUserId(Integer userId, Page<OrderVo> page) {
-        return null;
-    }
-
-    @Override
-    public String getSoldSeatsByFieldId(Integer fieldId) {
-        return null;
-    }
 }
