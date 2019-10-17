@@ -25,13 +25,13 @@ import java.util.UUID;
 @Service(interfaceClass = OrderService.class)
 public class OrderServiceImpl implements OrderService {
     @Autowired
-    MoocOrderTMapper moocOrderTMapper;
+    MoocOrderTMapper orderTMapper;
     @Autowired
     private RedisTemplate redisTemplate;
 
     @Override
     public boolean isTrueSeats(String fieldId, String seats) {
-        FiledVo filedVo = moocOrderTMapper.selectFieldById(fieldId);
+        FiledVo filedVo = orderTMapper.selectFieldById(fieldId);
 
         String s = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24";
         redisTemplate.opsForValue().set("Ids",s);
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean isNotSoldSeats(String fieldId, String seats) {
-        List<OrderVo> orderVo = moocOrderTMapper.selectOrderByFiledId(fieldId);
+        List<OrderVo> orderVo = orderTMapper.selectOrderByFiledId(fieldId);
         String[] split = seats.split(",");
 
         for (OrderVo vo : orderVo) {
@@ -79,11 +79,11 @@ public class OrderServiceImpl implements OrderService {
         OrderVo orderVo = new OrderVo();
 
         Date date = new Date();
-        FiledVo filedVo = moocOrderTMapper.selectCinemaIdfromFieldByFieldId(fields);
+        FiledVo filedVo = orderTMapper.selectCinemaIdfromFieldByFieldId(fields);
         int cinemaId = filedVo.getCinemaId();
         int filmId = filedVo.getFilmId();
-        MtimeCinemaT cinemaT =  moocOrderTMapper.selectCinemaNameById(cinemaId);
-        FilmInfo filmInfo = moocOrderTMapper.selectFilmNameById(filmId);
+        MtimeCinemaT cinemaT =  orderTMapper.selectCinemaNameById(cinemaId);
+        FilmInfo filmInfo = orderTMapper.selectFilmNameById(filmId);
         String filmName = filmInfo.getFilmName();
         String cinemaName = cinemaT.getCinemaName();
         orderVo.setFieldTime(date);
@@ -118,13 +118,14 @@ public class OrderServiceImpl implements OrderService {
         String s = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         orderVo.setSeatsIds(s);
 
-        moocOrderTMapper.insertOrder(orderVo);
+        orderTMapper.insertOrder(orderVo);
         return orderVo;
     }
 
     @Override
     public List<OrderInfoVO> getOrderInfo(String username) {
-        return null;
+        List<OrderInfoVO> orderInfos = orderTMapper.selectOrdersByUsername(username);
+        return orderInfos;
     }
 
     private void jedisAddSeat() {

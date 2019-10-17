@@ -13,8 +13,8 @@ import java.io.Serializable;
 @Data
 public class InfoRequestVo implements Serializable {
     private static final long serialVersionUID = 4782950768132292028L;
-    private String biography;
+    private String biopgraphy;
     private Actor_director actors ;
     private String filmId;
-    private ImgVo imgVo ;
+    private ImgVo imgVO ;
 }

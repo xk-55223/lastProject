@@ -16,7 +16,6 @@
         <result column="order_user" property="orderUser" />
         <result column="order_status" property="orderStatus" />
     </resultMap>
-<<<<<<< HEAD
     <insert id="insertOrder">
         insert into mooc_order_t (UUID,cinema_id,field_id,seats_ids,seats_name,film_price,order_price,order_time,order_user,order_status)
         values (#{order.orderId},#{order.cinemaId},#{order.fieldId},#{order.seatsIds},#{order.seatsName},
@@ -36,7 +35,7 @@
     </select>
     <select id="selectFilmNameById" resultType="com.stylefeng.guns.rest.film.vo.FilmInfo">
         select film_name as filmName from mtime_film_t where UUID = #{filmId}
-=======
+    </select>
     <select id="selectOrdersByUsername" resultType="com.stylefeng.guns.rest.order.bean.OrderInfoVO">
       select ot.UUID as orderId,ft.film_name as filmName, fit.begin_time as fieldTime
       , ct.cinema_name as cinemaName,ot.seats_name as seatsName,ot.order_price as orderPrice
@@ -46,7 +45,6 @@
       RIGHT JOIN mtime_field_t fit on ot.field_id = fit.UUID
       RIGHT JOIN mtime_cinema_t ct on ct.UUID = ot.cinema_id
       where ut.user_name = #{username}
->>>>>>> 8b4ab46b99e16f37489db99c917b951ca87b2cd0
     </select>
 
 </mapper>
