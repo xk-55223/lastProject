@@ -5,6 +5,8 @@ import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.rest.common.SimpleObject;
 import com.stylefeng.guns.rest.modular.auth.converter.BaseTransferEntity;
 
+import java.util.Arrays;
+
 /**
  * json测试
  *
@@ -16,7 +18,7 @@ import com.stylefeng.guns.rest.modular.auth.converter.BaseTransferEntity;
 public class JsonTest {
 
     public static void main(String[] args) {
-        String randomKey = "1xm7hw";
+        /*String randomKey = "1xm7hw";
 
         BaseTransferEntity baseTransferEntity = new BaseTransferEntity();
         SimpleObject simpleObject = new SimpleObject();
@@ -29,6 +31,7 @@ public class JsonTest {
         String encrypt = MD5Util.encrypt(json + randomKey);
         baseTransferEntity.setSign(encrypt);
 
-        System.out.println(JSON.toJSONString(baseTransferEntity));
+        System.out.println(JSON.toJSONString(baseTransferEntity));*/
+
     }
 }
