@@ -14,7 +14,4 @@ public interface OrderService {
 
     OrderVo saveOrderInfo(Integer fields,String soldSeats,String seatsName,Integer userId);
 
-
-    List<OrderInfoVO> getOrderInfo(String username);
-
 }
