@@ -1,4 +1,4 @@
-package com.stylefeng.guns.rest.modular.service.impl;
+package com.stylefeng.guns.rest.modular.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
