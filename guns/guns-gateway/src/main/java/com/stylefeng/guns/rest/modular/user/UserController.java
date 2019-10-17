@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @RestController
 @RequestMapping("user")
@@ -24,7 +25,7 @@ public class UserController {
     @Autowired
     private Jedis jedis;
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @RequestMapping(value = "register", method = RequestMethod.GET)
     public BaseRespVO registerUser(UserRegisterVo registerVo) {
         if (!userService.register(registerVo)) {
             return BaseRespVO.fail("用户已存在");
