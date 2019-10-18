@@ -6,17 +6,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "alipay")
 public class AlipayProperties {
-    private Qr qr;
+    private Qrcore qrcore;
 
-    public Qr getQr() {
-        return qr;
+    public Qrcore getQr() {
+        return qrcore;
     }
 
-    public void setQr(Qr qr) {
-        this.qr = qr;
+    public void setQr(Qrcore qr) {
+        this.qrcore = qr;
     }
 
-    public static class Qr {
+    public static class Qrcore {
         private String localAddress;
         private String address;
 
