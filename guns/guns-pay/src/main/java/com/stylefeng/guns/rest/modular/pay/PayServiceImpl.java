@@ -29,6 +29,7 @@ import com.stylefeng.guns.rest.modular.pay.utils.ZxingUtils;
 import com.stylefeng.guns.rest.pay.service.PayService;
 import com.stylefeng.guns.rest.pay.vo.OrderPayInfo;
 import com.stylefeng.guns.rest.pay.vo.PayInfoVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -105,32 +106,37 @@ public class PayServiceImpl implements PayService {
         PayInfoVo payInfoVo = new PayInfoVo();
         payInfoVo.setOrderId(orderId);
         if (StringUtils.isNotBlank(orderId)) {
-            String filePath = test_trade_precreate(orderId);
-            String QRCodeAddress = filePath.replace(alipayProperties.getQr().getLocalAddress(), "");
-            payInfoVo.setQRCodeAddress(QRCodeAddress);
-            InputStream inputStream = new FileInputStream(filePath);
-            aliyunOss.upload(inputStream, QRCodeAddress, aliyunProperties.getOss().getUpload().getContentType());
+            EntityWrapper<MoocOrderT> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("UUID", orderId);
+            List<MoocOrderT> orders = moocOrderTMapper.selectList(entityWrapper);
+            if (CollectionUtils.isNotEmpty(orders)) {
+                String filePath = test_trade_precreate(orders.get(0));
+                String QRCodeAddress = filePath.replace(alipayProperties.getQr().getLocalAddress(), "");
+                payInfoVo.setQRCodeAddress(QRCodeAddress);
+                InputStream inputStream = new FileInputStream(filePath);
+                aliyunOss.upload(inputStream, QRCodeAddress, aliyunProperties.getOss().getUpload().getContentType());
+            }
         }
         return payInfoVo;
     }
 
 
     // 测试当面付2.0支付
-    public String test_trade_precreate(String orderId) {
+    public String test_trade_precreate(MoocOrderT order) {
         // (必填) 商户网站订单系统中唯一订单号，64个字符以内，只能包含字母、数字、下划线，
         // 需保证商户系统端不能重复，建议通过数据库sequence生成，
-        String outTradeNo = orderId;
+        String outTradeNo = order.getUuid();
 
         // (必填) 订单标题，粗略描述用户的支付目的。如“xxx品牌xxx门店当面付扫码消费”
-        String subject = "性感荷官在线发牌";
+        String subject = "大华影院";
 
         // (必填) 订单总金额，单位为元，不能超过1亿元
         // 如果同时传入了【打折金额】,【不可打折金额】,【订单总金额】三者,则必须满足如下条件:【订单总金额】=【打折金额】+【不可打折金额】
-        String totalAmount = "9999";
+        String totalAmount = order.getOrderPrice() + "";
 
         // (可选) 订单不可打折金额，可以配合商家平台配置折扣活动，如果酒水不参与打折，则将对应金额填写至此字段
         // 如果该值未传入,但传入了【订单总金额】,【打折金额】,则该值默认为【订单总金额】-【打折金额】
-        String undiscountableAmount = "9998";
+        String undiscountableAmount = "";
 
         // 卖家支付宝账号ID，用于支持一个签约账号下支持打款到不同的收款账号，(打款到sellerId对应的支付宝账号)
         // 如果该字段为空，则默认为与支付宝签约的商户的PID，也就是appid对应的PID
@@ -157,7 +163,7 @@ public class PayServiceImpl implements PayService {
         // 创建一个商品信息，参数含义分别为商品id（使用国标）、名称、单价（单位为分）、数量，如果需要添加商品类别，详见GoodsDetail
         GoodsDetail goods1 = GoodsDetail.newInstance("goods_id001", "一号荷官", 9999, 1);
         // 创建好一个商品后添加至商品明细列表
-        goodsDetailList.add(goods1);
+            1.add(goods1);
 
         // 继续创建并添加第一条商品信息，用户购买的产品为“黑人牙刷”，单价为5.00元，购买了两件
         //GoodsDetail goods2 = GoodsDetail.newInstance("goods_id002", "xxx牙刷", 500, 2);
