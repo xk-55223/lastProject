@@ -1,13 +1,12 @@
 package com.stylefeng.guns.rest.modular.pay.service.impl;
 
-
-import com.alibaba.druid.support.logging.Log;
-import com.alibaba.druid.support.logging.LogFactory;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayRequest;
 import com.alipay.api.AlipayResponse;
 import com.stylefeng.guns.rest.modular.pay.model.builder.RequestBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Created by liuyangkly on 15/10/22.

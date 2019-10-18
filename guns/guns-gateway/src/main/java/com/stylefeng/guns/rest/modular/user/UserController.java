@@ -25,7 +25,7 @@ public class UserController {
     @Autowired
     private Jedis jedis;
 
-    @RequestMapping(value = "register", method = RequestMethod.GET)
+    @RequestMapping(value = "register", method = RequestMethod.POST)
     public BaseRespVO registerUser(UserRegisterVo registerVo) {
         if (!userService.register(registerVo)) {
             return BaseRespVO.fail("用户已存在");

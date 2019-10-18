@@ -2,14 +2,17 @@ package com.stylefeng.guns.rest.modular.pay;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alipay.api.AlipayResponse;
+import com.alipay.api.domain.Topic;
 import com.alipay.api.domain.TradeFundBill;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.stylefeng.guns.rest.BaseRespVO;
 import com.stylefeng.guns.rest.common.persistence.dao.MoocOrderTMapper;
 import com.stylefeng.guns.rest.common.persistence.model.MoocOrderT;
+import com.stylefeng.guns.rest.modular.oss.config.propertise.AliyunProperties;
+import com.stylefeng.guns.rest.modular.oss.util.AliyunOss;
 import com.stylefeng.guns.rest.modular.pay.config.Configs;
+import com.stylefeng.guns.rest.modular.pay.config.properties.AlipayProperties;
 import com.stylefeng.guns.rest.modular.pay.model.ExtendParams;
 import com.stylefeng.guns.rest.modular.pay.model.GoodsDetail;
 import com.stylefeng.guns.rest.modular.pay.model.builder.AlipayTradePrecreateRequestBuilder;
@@ -30,9 +33,14 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.sql.DataSource;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +48,20 @@ import java.util.List;
 @Service(interfaceClass = PayService.class)
 public class PayServiceImpl implements PayService {
     @Autowired
-    MoocOrderTMapper moocOrderTMapper;
-    private static Log log = LogFactory.getLog(Main.class);
+    private MoocOrderTMapper moocOrderTMapper;
+    @Autowired
+    private AliyunOss aliyunOss;
+    @Autowired
+    private AlipayProperties alipayProperties;
+    @Autowired
+    private AliyunProperties aliyunProperties;
+
+    @Autowired
+    @Qualifier("lbsDataSource")
+    private DataSource lbsDataSource;
+
+
+    private static Log log = LogFactory.getLog(PayServiceImpl.class);
 
     // 支付宝当面付2.0服务
     private static AlipayTradeService tradeService;
@@ -85,11 +105,15 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    public PayInfoVo getPayInfo(String orderId) {
+    public PayInfoVo getPayInfo(String orderId) throws URISyntaxException, FileNotFoundException {
         PayInfoVo payInfoVo = new PayInfoVo();
         payInfoVo.setOrderId(orderId);
         if (StringUtils.isNotBlank(orderId)) {
-            payInfoVo.setQRCodeAddress(test_trade_precreate(orderId));
+            String filePath = test_trade_precreate(orderId);
+            String QRCodeAddress = filePath.replace(alipayProperties.getQr().getLocalAddress(), "");
+            payInfoVo.setQRCodeAddress(QRCodeAddress);
+            InputStream inputStream = new FileInputStream(filePath);
+            aliyunOss.upload(inputStream, QRCodeAddress, aliyunProperties.getOss().getUpload().getContentType());
         }
         return payInfoVo;
     }
@@ -149,11 +173,11 @@ public class PayServiceImpl implements PayService {
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                .setNotifyUrl("http://5b0988e595225.cdn.sohucs.com/images/20190221/5c1b73f1e2954af4a044888259978673.gif")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+                // .setNotifyUrl("http://5b0988e595225.cdn.sohucs.com/images/20190221/5c1b73f1e2954af4a044888259978673.gif")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);
-        String QRCodeAddress = null;
+        String filePath = null;
         switch (result.getTradeStatus()) {
             case SUCCESS:
                 log.info("支付宝预下单成功: )");
@@ -162,8 +186,7 @@ public class PayServiceImpl implements PayService {
                 dumpResponse(response);
 
                 // 需要修改为运行机器上的路径
-                String filePath = String.format("D:\\alipay/qr-%s.png", response.getOutTradeNo());
-                QRCodeAddress = filePath.replace("D:\\", "");
+                filePath = String.format(alipayProperties.getQr().getLocalAddress() + alipayProperties.getQr().getAddress(), response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
                 break;
@@ -180,7 +203,7 @@ public class PayServiceImpl implements PayService {
                 log.error("不支持的交易状态，交易返回异常!!!");
                 break;
         }
-        return QRCodeAddress;
+        return filePath;
     }
 
     @Override

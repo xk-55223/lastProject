@@ -2,6 +2,7 @@ package com.stylefeng.guns.rest.modular.order;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.rest.BaseRespVO;
+import com.stylefeng.guns.rest.config.properties.AliyunProperties;
 import com.stylefeng.guns.rest.order.OrderService;
 import com.stylefeng.guns.rest.pay.service.PayService;
 import com.stylefeng.guns.rest.pay.vo.OrderPayInfo;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -22,7 +25,8 @@ import java.util.List;
 public class OrderController {
     @Autowired
     Jedis jdies;
-
+    @Autowired
+    AliyunProperties aliyunProperties;
     @Reference(interfaceClass = OrderService.class, check = false)
     OrderService orderService;
 
@@ -31,10 +35,15 @@ public class OrderController {
 
     @RequestMapping(value = "getPayInfo", method = RequestMethod.POST)
     public BaseRespVO getPayInfo(String orderId) {
-        PayInfoVo payInfoVo = payService.getPayInfo(orderId);
+        PayInfoVo payInfoVo = null;
+        try {
+            payInfoVo = payService.getPayInfo(orderId);
+        } catch (URISyntaxException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
         if (payInfoVo.getQRCodeAddress() != null) {
             BaseRespVO ok = BaseRespVO.ok(payInfoVo);
-            ok.setImgPre("D:/");
+            ok.setImgPre(aliyunProperties.getOss().getImg().getDomain()+"/");
             return ok;
         } else {
             return BaseRespVO.fail("订单支付失败，请稍后重试");

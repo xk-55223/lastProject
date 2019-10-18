@@ -1,10 +1,9 @@
 package com.stylefeng.guns.rest.modular.pay.model.builder;
 
-
-import com.alibaba.dubbo.common.utils.StringUtils;
-import com.google.gson.annotations.SerializedName;
 import com.stylefeng.guns.rest.modular.pay.model.hb.*;
 import com.stylefeng.guns.rest.modular.pay.utils.Utils;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

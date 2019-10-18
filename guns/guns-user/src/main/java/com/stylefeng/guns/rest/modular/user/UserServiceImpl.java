@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeUserTMapper;
 import com.stylefeng.guns.rest.common.persistence.model.MtimeUserT;
+import com.stylefeng.guns.rest.modular.user.util.MD5Digest;
 import com.stylefeng.guns.rest.user.service.UserService;
 import com.stylefeng.guns.rest.user.vo.UserInfoVo;
 import com.stylefeng.guns.rest.user.vo.UserRegisterVo;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(UserRegisterVo registerVo) {
+        registerVo.setPassword(MD5Digest.encode(registerVo.getPassword()));
         if (!checkUsername(registerVo.getUsername()) && mtimeUserTMapper.insert(userRegisterVo2MtimeUserT(registerVo)) == 1) {
             return true;
         }
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(String username, String password) {
+        password = MD5Digest.encode(password);
         EntityWrapper<MtimeUserT> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("user_name", username);
         List<MtimeUserT> mtimeUserTS = mtimeUserTMapper.selectList(entityWrapper);

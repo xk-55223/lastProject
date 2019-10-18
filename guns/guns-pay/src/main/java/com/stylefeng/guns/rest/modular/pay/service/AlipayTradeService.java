@@ -1,6 +1,5 @@
 package com.stylefeng.guns.rest.modular.pay.service;
 
-
 import com.stylefeng.guns.rest.modular.pay.model.builder.AlipayTradePayRequestBuilder;
 import com.stylefeng.guns.rest.modular.pay.model.builder.AlipayTradePrecreateRequestBuilder;
 import com.stylefeng.guns.rest.modular.pay.model.builder.AlipayTradeQueryRequestBuilder;

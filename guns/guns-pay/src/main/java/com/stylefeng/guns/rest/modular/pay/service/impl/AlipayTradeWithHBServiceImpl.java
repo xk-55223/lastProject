@@ -16,7 +16,6 @@ import com.stylefeng.guns.rest.modular.pay.service.impl.hb.HbListener;
 import com.stylefeng.guns.rest.modular.pay.service.impl.hb.TradeListener;
 import org.apache.commons.lang.StringUtils;
 
-
 import java.net.ConnectException;
 import java.net.NoRouteToHostException;
 import java.net.SocketException;

@@ -1,22 +1,15 @@
 package com.stylefeng.guns.rest.modular.auth.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.rest.BaseRespVO;
-import com.stylefeng.guns.rest.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthRequest;
 import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthResponse;
 import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
-import com.stylefeng.guns.rest.modular.auth.validator.IReqValidator;
 import com.stylefeng.guns.rest.user.service.UserService;
-import com.stylefeng.guns.rest.user.vo.UserInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
-
-import javax.annotation.Resource;
 
 /**
  * 请求验证的
@@ -46,7 +39,7 @@ public class AuthController {
             System.out.println(jedis.get("myKey"));
             System.out.println(jedis.get(token));
             System.out.println(token);
-            jedis.expire(token, 360);
+            jedis.expire(token, 3600);
             return BaseRespVO.ok(new AuthResponse(token, randomKey));
         } else {
             return BaseRespVO.fail("用户名或密码错误");
