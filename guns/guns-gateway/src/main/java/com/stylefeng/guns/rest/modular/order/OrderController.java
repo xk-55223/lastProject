@@ -25,10 +25,13 @@ import java.util.List;
 public class OrderController {
     @Reference(interfaceClass = OrderService.class, check = false)
     OrderService orderService;
+
     @Autowired
     JwtProperties jwtProperties;
+
     @Reference(interfaceClass = PayService.class, check = false)
     PayService payService;
+
     @Autowired
     Jedis jedis;
 

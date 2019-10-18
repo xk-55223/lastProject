@@ -9,6 +9,7 @@ import com.stylefeng.guns.rest.common.persistence.dao.MtimeCinemaTMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -117,15 +118,36 @@ public class    CinemaServiceImpl implements CinemaService {
         public FieldDetailInfoVO getFieldInfo (Integer cinemaId, Integer fieldId){
             FieldCinemaVO cinemaInfo = cinemaTMapper.selectCinemaInfoById(cinemaId);
             FieldFilmInfoVO filmInfo = cinemaTMapper.selectFieldFilmInfoVO(cinemaId, fieldId);
-            HallInfoVO hallInfo = cinemaTMapper.selectHallInfo(fieldId);
+            List<HallInfoVO> hallInfo = cinemaTMapper.selectHallInfo(fieldId);
+            String seatsIds = getSeatsIds(hallInfo);
             FieldDetailInfoVO fieldDetailInfoVO = new FieldDetailInfoVO();
             fieldDetailInfoVO.setCinemaInfo(cinemaInfo);
             fieldDetailInfoVO.setFilmInfo(filmInfo);
-            fieldDetailInfoVO.setHallInfo(hallInfo);
+            HallInfoVO hall = hallInfo.get(0);
+            hall.setSoldSeats(seatsIds);
+            fieldDetailInfoVO.setHallInfo(hall);
             return fieldDetailInfoVO;
         }
 
-        private List<FieldVO> getFilmFields (Integer cinemaId, Integer filmId){
+    private String getSeatsIds(List<HallInfoVO> hallInfo) {
+        StringBuilder seatsIdsNoOrder = new StringBuilder();
+        for (HallInfoVO hallInfoVO : hallInfo) {
+            seatsIdsNoOrder.append(hallInfoVO.getSoldSeats()).append(",");
+        }
+        String seatsIds = seatsIdsNoOrder.toString();
+        String[] seats = seatsIds.split(",");
+        Arrays.sort(seats);
+        StringBuilder seatsIdsOrdered = new StringBuilder();
+
+        for (int i = 0; i < seats.length; i++) {
+            seatsIdsOrdered.append(seats[i]);
+            if (i != seats.length - 1) seatsIdsOrdered.append(",");
+        }
+
+        return seatsIdsOrdered.toString();
+    }
+
+    private List<FieldVO> getFilmFields (Integer cinemaId, Integer filmId){
             return cinemaTMapper.selectFilmFields(cinemaId, filmId);
         }
 

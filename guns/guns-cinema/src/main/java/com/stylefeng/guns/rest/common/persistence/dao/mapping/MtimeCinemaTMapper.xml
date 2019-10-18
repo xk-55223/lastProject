@@ -87,9 +87,11 @@
     <select id="selectHallInfo" resultType="com.stylefeng.guns.rest.cinema.bean.HallInfoVO">
         select ft.UUID as hallFieldId, ft.hall_name as hallName
         ,ft.price as price , hdt.seat_address as seatFile
+        , ot.seats_ids as soldSeats
         from
         mtime_field_t ft LEFT JOIN mtime_hall_dict_t hdt
         on ft.hall_id = hdt.UUID
+        RIGHT JOIN mooc_order_t ot on ot.field_id = ft.UUID
         <where>
             <if test="fieldId != null">
                 ft.UUID = #{fieldId}

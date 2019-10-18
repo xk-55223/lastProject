@@ -3,27 +3,28 @@ package com.stylefeng.guns.rest.order.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class OrderVo {
+public class OrderVo implements Serializable {
+    private static final long serialVersionUID = -7464261586134282078L;
     String orderId;
     String filmName;
     String cinemaName;
     String seatsName;
-    String cinemaId;
+    Integer cinemaId;
     String fields;
-    String fieldId;
-    String filmId;
+    Integer fieldId;
+    Integer filmId;
     String seatsIds;
-    double filePrice;
+    double filmPrice;
     double orderPrice;
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     Date orderTime;
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    Date orderUser;
-    @JsonFormat(pattern = "MM月dd号 hh:mm")
-    Date fieldTime;
-    String orderStatus;
+    Integer orderUser;
+    String fieldTime;
+    Integer orderStatus;
     long orderTimeStamp;
 }

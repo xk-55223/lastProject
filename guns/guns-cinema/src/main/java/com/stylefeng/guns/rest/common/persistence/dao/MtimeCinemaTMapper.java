@@ -24,7 +24,7 @@ public interface MtimeCinemaTMapper extends BaseMapper<MtimeCinemaT> {
 
     FieldFilmInfoVO selectFieldFilmInfoVO(@Param("cinemaId") Integer cinemaId,@Param("fieldId") Integer fieldId);
 
-    HallInfoVO selectHallInfo(@Param("fieldId") Integer fieldId);
+    List<HallInfoVO> selectHallInfo(@Param("fieldId") Integer fieldId);
 
     List<AreaVo> selectArea();
 
