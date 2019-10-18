@@ -65,6 +65,6 @@ aliyun:
 
 
 alipay:
-  qr:
+  qrcore:
     local-address: D:/
     address: alipay/qr-%s.png

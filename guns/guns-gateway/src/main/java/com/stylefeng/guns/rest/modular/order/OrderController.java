@@ -65,7 +65,7 @@ public class OrderController {
         }
         if (payInfoVo.getQRCodeAddress() != null) {
             BaseRespVO ok = BaseRespVO.ok(payInfoVo);
-            ok.setImgPre(aliyunProperties.getOss().getImg().getDomain() + "/");
+            ok.setImgPre("http://"+aliyunProperties.getOss().getImg().getDomain() + "/");
             return ok;
         } else {
             return BaseRespVO.fail("订单支付失败，请稍后重试");
