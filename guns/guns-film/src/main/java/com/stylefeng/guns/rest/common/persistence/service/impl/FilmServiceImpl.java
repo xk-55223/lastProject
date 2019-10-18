@@ -83,7 +83,7 @@ public class FilmServiceImpl implements FilmService {
             yearId =  "99";
         }
         ConditionVo conditionVo = new ConditionVo();
-        conditionVo.setCatInfoV(this.selectcatInfo(catId));
+        conditionVo.setCatInfo(this.selectcatInfo(catId));
         conditionVo.setSourceInfo(this.selectsourceInfo(sourceId));
         conditionVo.setYearInfo(this.selectyearInfo(yearId));
         return conditionVo;

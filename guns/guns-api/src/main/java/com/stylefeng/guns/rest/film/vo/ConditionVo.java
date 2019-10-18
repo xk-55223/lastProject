@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class ConditionVo implements Serializable {
     private static final long serialVersionUID = -5300291191563888755L;
-    private List<CatInfoVo> catInfoV;
+    private List<CatInfoVo> catInfo;
     private List<SourceInfoVo> sourceInfo;
     private List<YearInfoVo> yearInfo;
 }
