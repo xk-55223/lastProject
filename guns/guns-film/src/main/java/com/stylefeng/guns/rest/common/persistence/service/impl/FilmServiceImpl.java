@@ -83,7 +83,7 @@ public class FilmServiceImpl implements FilmService {
             yearId =  "99";
         }
         ConditionVo conditionVo = new ConditionVo();
-        conditionVo.setCatInfoV(this.selectcatInfo(catId));
+        conditionVo.setCatInfo(this.selectcatInfo(catId));
         conditionVo.setSourceInfo(this.selectsourceInfo(sourceId));
         conditionVo.setYearInfo(this.selectyearInfo(yearId));
         return conditionVo;
@@ -150,7 +150,7 @@ public class FilmServiceImpl implements FilmService {
         filmdetail.setInfo03(filmTime + area + "上映");
         /*查询演员信息*/
         InfoRequestVo requestVo = new InfoRequestVo();
-        requestVo.setBiography(filmMapper.selectBiography(filmId));
+        requestVo.setBiopgraphy(filmMapper.selectBiography(filmId));
         requestVo.setFilmId(filmId);
         String directorId = filmMapper.selectDirectorId(filmId);
         Actor director = filmMapper.selectActor(Integer.valueOf(directorId));
@@ -183,7 +183,7 @@ public class FilmServiceImpl implements FilmService {
         if (img[4] != null){
             imgVo.setImg04(img[4]);
         }
-        requestVo.setImgVo(imgVo);
+        requestVo.setImgVO(imgVo);
         filmdetail.setInfo04(requestVo);
         return filmdetail;
     }

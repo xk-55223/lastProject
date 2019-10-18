@@ -15,7 +15,7 @@ import com.stylefeng.guns.rest.modular.auth.security.impl.Base64SecurityAction;
 public class DecryptTest {
 
     public static void main(String[] args) {
-
+/*
         String salt = "0iqwhi";
 
         SimpleObject simpleObject = new SimpleObject();
@@ -32,6 +32,6 @@ public class DecryptTest {
         baseTransferEntity.setObject(encode);
         baseTransferEntity.setSign(md5);
 
-        System.out.println(JSON.toJSONString(baseTransferEntity));
+        System.out.println(JSON.toJSONString(baseTransferEntity));*/
     }
 }

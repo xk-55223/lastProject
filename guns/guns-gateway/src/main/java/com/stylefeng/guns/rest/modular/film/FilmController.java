@@ -5,6 +5,7 @@ import com.stylefeng.guns.rest.BaseRespVO;
 import com.stylefeng.guns.rest.film.FilmService;
 import com.stylefeng.guns.rest.film.vo.FilmQueryVo;
 import com.stylefeng.guns.rest.film.vo.FilmRequestVo;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,16 +31,17 @@ public class FilmController {
         BaseRespVO respVO = new BaseRespVO();
         return respVO.ok(filmService.getConditionList(catId,sourceId,yearId));
     }
-    @RequestMapping("films")
-    public BaseRespVO ShowFilms(int searchType){
-        BaseRespVO ok = new BaseRespVO().ok(filmService.getFilmDetail(searchType));
-        return ok;
+    @RequestMapping("films/{searchType}")
+    public BaseRespVO ShowFilms(@PathVariable int searchType){
+        BaseRespVO resp = new BaseRespVO().ok(filmService.getFilmDetail(searchType));
+        resp.setImgPre("http://img.meetingshop.cn/");
+        return resp;
     }
 
     @RequestMapping("getFilms")
     public BaseRespVO getFilmsList(FilmRequestVo filmRes){
         FilmQueryVo filmsList = filmService.getFilmsList(filmRes);
-        BaseRespVO respVO = BaseRespVO.ok(filmsList);
+        BaseRespVO respVO = BaseRespVO.ok(filmsList.getData());
         respVO.setImgPre(filmsList.getImgPre());
         respVO.setTotalPage(filmsList.getTotalPage());
         respVO.setNowPage(filmRes.getNowPage());

@@ -56,10 +56,6 @@ public class PayServiceImpl implements PayService {
     @Autowired
     private AliyunProperties aliyunProperties;
 
-    @Autowired
-    @Qualifier("lbsDataSource")
-    private DataSource lbsDataSource;
-
 
     private static Log log = LogFactory.getLog(PayServiceImpl.class);
 

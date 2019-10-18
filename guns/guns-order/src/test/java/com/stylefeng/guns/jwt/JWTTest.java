@@ -6,6 +6,7 @@ import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
 import java.security.Key;
+import java.util.Arrays;
 
 /**
  * jwt测试
@@ -13,11 +14,12 @@ import java.security.Key;
  * @author fengshuonan
  * @date 2017-08-21 16:34
  */
+
 public class JWTTest {
 
     public static void main(String[] args) {
 
-        Key key = MacProvider.generateKey();
+        /*Key key = MacProvider.generateKey();
 
         String compactJws = Jwts.builder()
                 .setSubject("Joe")
@@ -40,6 +42,6 @@ public class JWTTest {
             System.out.println("not trust");
         } catch (ExpiredJwtException e) {
             System.out.println("ExpiredJwtException");
-        }
+        }*/
     }
 }

@@ -73,7 +73,8 @@ public class UserController {
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             String authToken = requestHeader.substring(7);
             if (jedis.del(authToken) == 0) {
-                return BaseRespVO.fail("退出失败，用户尚未登陆");
+                /*return BaseRespVO.fail("退出失败，用户尚未登陆");*/
+                return BaseRespVO.ok("成功退出");
             }
             return BaseRespVO.ok("成功退出");
         } else {
