@@ -104,7 +104,7 @@
     <select id="selectBrand" resultType="com.stylefeng.guns.rest.cinema.bean.BrandVo">
         select UUID as brandId, show_name as brandName from mtime_brand_dict_t
     </select>
-    <select id="selectHallype" resultType="com.stylefeng.guns.rest.cinema.bean.HalltypeVo">
+    <select id="selectHallType" resultType="com.stylefeng.guns.rest.cinema.bean.HallTypeVo">
         select UUID as halltypeId, show_name as halltypeName from mtime_hall_dict_t
     </select>
 </mapper>

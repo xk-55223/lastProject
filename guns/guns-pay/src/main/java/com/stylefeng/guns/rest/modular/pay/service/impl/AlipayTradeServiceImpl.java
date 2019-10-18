@@ -1,6 +1,5 @@
 package com.stylefeng.guns.rest.modular.pay.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePayRequest;
 import com.alipay.api.response.AlipayTradePayResponse;

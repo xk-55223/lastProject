@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 public class ConditionVo implements Serializable {
     private List<AreaVo> areaList;
-    private List<HalltypeVo> halltypeList;
+    private List<HallTypeVo> halltypeList;
     private List<BrandVo> brandList;
 }

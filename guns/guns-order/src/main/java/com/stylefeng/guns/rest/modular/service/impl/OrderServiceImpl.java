@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     public boolean isTrueSeats(String fieldId, String seats) {
         FiledVo filedVo = orderTMapper.selectFieldById(fieldId);
-        FieldSeatsInfoVO fieldSeats = (FieldSeatsInfoVO) redisTemplate.opsForValue().get("hall2" + filedVo.getHallId());
+        FieldSeatsInfoVO fieldSeats = (FieldSeatsInfoVO) redisTemplate.opsForValue().get("hall" + filedVo.getHallId());
             String ids = fieldSeats.getIds();
             if (! ids.contains(seats) || seats.equals("0")) return false;
         return true;
@@ -62,7 +62,8 @@ public class OrderServiceImpl implements OrderService {
     public OrderVo saveOrderInfo(Integer fieldId, String soldSeats, String seatsTypeName, Integer userId) {
         String[] seatsId = soldSeats.split(",");
         String fieldIdOfString = String.valueOf(fieldId);
-        for (String seatId : seatsId) {
+        for (String seatId : seatsId)
+        {
             if(!(isTrueSeats(fieldIdOfString,seatId))&&(!isSoldSeats(fieldIdOfString,seatId))){
                 throw new JwtException("订单创建失败");
             }
@@ -113,6 +114,10 @@ public class OrderServiceImpl implements OrderService {
         } else if ("双排座".equals(seatsTypeName)) {
             List<List<SeatInfoVO>> couple = seat.getCouple();
             getSeatName(couple, seatsId, seatsName);
+        } else {
+            List<List<SeatInfoVO>> allseats = seat.getSingle();
+            allseats.addAll(seat.getCouple());
+            getSeatName(allseats, seatsId, seatsName);
         }
 
         return seatsName.toString().trim();

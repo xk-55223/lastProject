@@ -3,6 +3,7 @@ package com.stylefeng.guns.rest.modular.pay.model.result;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.stylefeng.guns.rest.modular.pay.model.TradeStatus;
 
+
 /**
  * Created by liuyangkly on 15/8/27.
  */
@@ -35,5 +36,4 @@ public class AlipayF2FPrecreateResult implements Result {
         return response != null &&
                 TradeStatus.SUCCESS.equals(tradeStatus);
     }
-
 }

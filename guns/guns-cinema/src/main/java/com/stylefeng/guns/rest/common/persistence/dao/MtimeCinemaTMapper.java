@@ -30,5 +30,5 @@ public interface MtimeCinemaTMapper extends BaseMapper<MtimeCinemaT> {
 
     List<BrandVo> selectBrand();
 
-    List<HalltypeVo> selectHallype();
+    List<HallTypeVo> selectHallType();
 }

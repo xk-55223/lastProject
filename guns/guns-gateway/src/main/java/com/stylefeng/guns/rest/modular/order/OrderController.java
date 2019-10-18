@@ -2,6 +2,7 @@ package com.stylefeng.guns.rest.modular.order;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.rest.BaseRespVO;
+import com.stylefeng.guns.rest.config.properties.AliyunProperties;
 import com.stylefeng.guns.rest.config.properties.JwtProperties;
 import com.stylefeng.guns.rest.order.OrderService;
 import com.stylefeng.guns.rest.order.vo.OrderVo;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
+
 import com.stylefeng.guns.rest.pay.service.PayService;
 import com.stylefeng.guns.rest.pay.vo.OrderPayInfo;
 import com.stylefeng.guns.rest.pay.vo.PayInfoVo;
@@ -18,11 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.stylefeng.guns.rest.PageInfoVO;
 import com.stylefeng.guns.rest.order.bean.OrderInfoVO;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
 @RequestMapping("order")
 public class OrderController {
+    @Autowired
+    AliyunProperties aliyunProperties;
+
     @Reference(interfaceClass = OrderService.class, check = false)
     OrderService orderService;
 
@@ -53,10 +60,15 @@ public class OrderController {
 
     @RequestMapping(value = "getPayInfo", method = RequestMethod.POST)
     public BaseRespVO getPayInfo(String orderId) {
-        PayInfoVo payInfoVo = payService.getPayInfo(orderId);
+        PayInfoVo payInfoVo = null;
+        try {
+            payInfoVo = payService.getPayInfo(orderId);
+        } catch (URISyntaxException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
         if (payInfoVo.getQRCodeAddress() != null) {
             BaseRespVO ok = BaseRespVO.ok(payInfoVo);
-            ok.setImgPre("D:/");
+            ok.setImgPre("http://"+aliyunProperties.getOss().getImg().getDomain() + "/");
             return ok;
         } else {
             return BaseRespVO.fail("订单支付失败，请稍后重试");
@@ -76,7 +88,7 @@ public class OrderController {
     public BaseRespVO getOrderInfo(PageInfoVO pageInfo, HttpServletRequest request) {
         String token = request.getHeader(jwtProperties.getHeader()).substring(7);
         String userId = jedis.get(token);
-        List<OrderInfoVO> orders = orderService.getOrderInfo(userId,pageInfo);
+        List<OrderInfoVO> orders = orderService.getOrderInfo(userId, pageInfo);
         return BaseRespVO.ok(orders);
     }
 }

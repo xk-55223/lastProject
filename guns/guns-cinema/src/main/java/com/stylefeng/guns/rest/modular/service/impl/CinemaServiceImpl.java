@@ -31,8 +31,8 @@ public class    CinemaServiceImpl implements CinemaService {
         if (cinemaBeanVo.getAreaId() != 99) {
             entityWrapper.eq("area_id",cinemaBeanVo.getBrandId());
         }
-        if (cinemaBeanVo.getHalltypeId() != 99) {
-            entityWrapper.like("hall_ids","#" + cinemaBeanVo.getHalltypeId() + "#");
+        if (cinemaBeanVo.getHallType() != 99) {
+            entityWrapper.like("hall_ids","#" + cinemaBeanVo.getHallType() + "#");
         }
         List<MtimeCinemaT> mtimeCinemaTS1 = cinemaTMapper.selectPage(page, entityWrapper);
         long total = page.getTotal();
@@ -77,14 +77,14 @@ public class    CinemaServiceImpl implements CinemaService {
             }
         }
 
-        List<HalltypeVo> halltypeVos = cinemaTMapper.selectHallype();
-        HalltypeVo halltypeVo1 = new HalltypeVo();
+        List<HallTypeVo> halltypeVos = cinemaTMapper.selectHallType();
+        HallTypeVo halltypeVo1 = new HallTypeVo();
         halltypeVo1.setActive(false);
         halltypeVo1.setHalltypeId(99);
         halltypeVo1.setHalltypeName("全部");
         halltypeVos.add(halltypeVo1);
 
-        for (HalltypeVo halltypeVo : halltypeVos) {
+        for (HallTypeVo halltypeVo : halltypeVos) {
             halltypeVo.setActive(false);
             if(conditionBeanVo.getHallType()==conditionBeanVo.getHallType()){
                 halltypeVo.setActive(true);

@@ -1,9 +1,8 @@
 package com.stylefeng.guns.rest.modular.pay.model.builder;
 
-
-import com.google.gson.annotations.SerializedName;
 import com.stylefeng.guns.rest.modular.pay.model.ExtendParams;
 import com.stylefeng.guns.rest.modular.pay.model.GoodsDetail;
+import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
