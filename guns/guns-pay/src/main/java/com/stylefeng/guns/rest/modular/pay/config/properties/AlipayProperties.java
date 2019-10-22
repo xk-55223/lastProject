@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 public class AlipayProperties {
     private Qrcore qrcore;
 
-    public Qrcore getQr() {
+    public Qrcore getQrcore() {
         return qrcore;
     }
 
-    public void setQr(Qrcore qr) {
-        this.qrcore = qr;
+    public void setQrcore(Qrcore qrcore) {
+        this.qrcore = qrcore;
     }
 
     public static class Qrcore {

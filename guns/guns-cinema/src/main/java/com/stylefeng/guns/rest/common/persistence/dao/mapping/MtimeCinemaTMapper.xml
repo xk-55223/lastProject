@@ -91,7 +91,7 @@
         from
         mtime_field_t ft LEFT JOIN mtime_hall_dict_t hdt
         on ft.hall_id = hdt.UUID
-        RIGHT JOIN mooc_order_t ot on ot.field_id = ft.UUID
+        LEFT JOIN mooc_order_t ot on ot.field_id = ft.UUID
         <where>
             <if test="fieldId != null">
                 ft.UUID = #{fieldId}

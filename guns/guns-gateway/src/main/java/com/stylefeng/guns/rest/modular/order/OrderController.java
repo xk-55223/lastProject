@@ -44,7 +44,7 @@ public class OrderController {
 
     @RequestMapping("buyTickets")
     public BaseRespVO insertOrder(Integer fieldId, String soldSeats, String seatsName, HttpServletRequest request) {
-        final String requestHeader = request.getHeader(jwtProperties.getHeader());
+        String requestHeader = request.getHeader(jwtProperties.getHeader());
         String authToken = null;
         Integer userId = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {

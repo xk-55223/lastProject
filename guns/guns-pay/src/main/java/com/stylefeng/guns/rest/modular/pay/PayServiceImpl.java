@@ -111,7 +111,7 @@ public class PayServiceImpl implements PayService {
             List<MoocOrderT> orders = moocOrderTMapper.selectList(entityWrapper);
             if (CollectionUtils.isNotEmpty(orders)) {
                 String filePath = test_trade_precreate(orders.get(0));
-                String QRCodeAddress = filePath.replace(alipayProperties.getQr().getLocalAddress(), "");
+                String QRCodeAddress = filePath.replace(alipayProperties.getQrcore().getLocalAddress(), "");
                 payInfoVo.setQRCodeAddress(QRCodeAddress);
                 InputStream inputStream = new FileInputStream(filePath);
                 aliyunOss.upload(inputStream, QRCodeAddress, aliyunProperties.getOss().getUpload().getContentType());
@@ -188,7 +188,7 @@ public class PayServiceImpl implements PayService {
                 dumpResponse(response);
 
                 // 需要修改为运行机器上的路径
-                filePath = String.format(alipayProperties.getQr().getLocalAddress() + alipayProperties.getQr().getAddress(), response.getOutTradeNo());
+                filePath = String.format(alipayProperties.getQrcore().getLocalAddress() + alipayProperties.getQrcore().getAddress(), response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
                 break;

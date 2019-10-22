@@ -240,7 +240,6 @@ public class DateUtil {
         Calendar canlendar = Calendar.getInstance(); // java.util包
         canlendar.add(Calendar.DATE, daysInt); // 日期减 如果不够减会将月变动
         Date date = canlendar.getTime();
-
         SimpleDateFormat sdf = new SimpleDateFormat("E");
         String dateStr = sdf.format(date);
 

@@ -3,8 +3,10 @@ package com.stylefeng.guns.rest.modular.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.rest.cinema.bean.*;
 import com.stylefeng.guns.rest.cinema.service.CinemaService;
+import com.stylefeng.guns.rest.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeCinemaTMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -130,6 +132,7 @@ public class    CinemaServiceImpl implements CinemaService {
         }
 
     private String getSeatsIds(List<HallInfoVO> hallInfo) {
+        if (hallInfo.size() == 0) return null;
         StringBuilder seatsIdsNoOrder = new StringBuilder();
         for (HallInfoVO hallInfoVO : hallInfo) {
             seatsIdsNoOrder.append(hallInfoVO.getSoldSeats()).append(",");
