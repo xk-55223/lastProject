@@ -57,11 +57,13 @@ public class promoController {
     }
 
     @RequestMapping("createOrder")
-    public PromoResultVO createOrder(Integer promoId, Integer amount, HttpServletRequest request) {
+    public PromoResultVO createOrder(Integer promoId, Integer amount, HttpServletRequest request,String promoToken) {
         long beginTime = System.currentTimeMillis();
         Future<PromoResultVO> future = executorService.submit(() -> {
             Integer userId = UserUtil.getUserId(request, jwtProperties, jedis);
             if (userId == null || userId < 1) return PromoResultVO.fail("登录信息有误,请重新登录。");
+            String tokenValue = jedis.get(PROMO_TOKEN_REDIS_PRE + "userId_" + userId + "_promoId_" + promoId);
+            if (promoToken == null || !promoToken.equals(tokenValue)) return PromoResultVO.fail("下单失败");
             PromoEnum result = promoService.transactionCreateOrder(promoId, amount, userId);
             if (0 == result.getIndex()) {
                 return PromoResultVO.success("下单成功");
