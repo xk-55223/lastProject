@@ -48,6 +48,7 @@
         , ot.seats_name as seatsName
         , ot.order_price as orderPrice
         , ot.order_status as orderStatus
+        , ot.order_time as orderTime
       from  mooc_order_t ot
       LEFT JOIN mtime_film_t ft on ot.film_id = ft.UUID
       LEFT JOIN mtime_field_t fit on ot.field_id = fit.UUID

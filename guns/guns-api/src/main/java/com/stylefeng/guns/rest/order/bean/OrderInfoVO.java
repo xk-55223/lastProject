@@ -14,5 +14,7 @@ public class OrderInfoVO implements Serializable {
     private String seatsName;
     private String orderPrice;
     private String orderStatus;
+    private String orderTimestamp;
+    private String orderTime;
 
 }

@@ -9,6 +9,7 @@ import com.stylefeng.guns.rest.cinema.bean.MtimeCinemaT;
 import com.stylefeng.guns.rest.common.persistence.dao.MoocOrderTMapper;
 import com.stylefeng.guns.rest.film.vo.FilmInfo;
 import com.stylefeng.guns.rest.film.vo.FilmVo;
+import com.stylefeng.guns.rest.modular.status.OrderStatusEnum;
 import com.stylefeng.guns.rest.order.OrderService;
 import com.stylefeng.guns.rest.order.bean.FieldSeatsInfoVO;
 import com.stylefeng.guns.rest.order.bean.OrderInfoVO;
@@ -20,11 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @Service(interfaceClass = OrderService.class)
@@ -108,28 +107,38 @@ public class OrderServiceImpl implements OrderService {
 
     private String getSeatsName(FieldSeatsInfoVO seat, String[] seatsId, String  seatsTypeName) {
         StringBuilder seatsName = new StringBuilder();
+        int[] seatIds = stringArrays2intArraySort(seatsId);
         if ("单排座".equals(seatsTypeName)) {
             List<List<SeatInfoVO>> single = seat.getSingle();
-            getSeatName(single, seatsId, seatsName);
+            getSeatName(single, seatIds, seatsName);
         } else if ("双排座".equals(seatsTypeName)) {
             List<List<SeatInfoVO>> couple = seat.getCouple();
-            getSeatName(couple, seatsId, seatsName);
+            getSeatName(couple, seatIds, seatsName);
         } else {
             List<List<SeatInfoVO>> allseats = seat.getSingle();
             allseats.addAll(seat.getCouple());
-            getSeatName(allseats, seatsId, seatsName);
+            getSeatName(allseats, seatIds, seatsName);
         }
 
         return seatsName.toString().trim();
     }
 
-    private void getSeatName(List<List<SeatInfoVO>> seat, String[] seatsId, StringBuilder seatsName) {
+    private int[] stringArrays2intArraySort(String[] seatsId) {
+        int[] ints = new int[seatsId.length];
+        for (int i = 0; i < seatsId.length; i++) {
+            ints[i] = Integer.valueOf(seatsId[i]);
+        }
+        Arrays.sort(ints);
+        return ints;
+    }
+
+    private void getSeatName(List<List<SeatInfoVO>> seat, int[] seatsId, StringBuilder seatsName) {
         int i = 0;
         for (List<SeatInfoVO> seatInfos : seat) {
             if (i >= seatsId.length) break;
             for (SeatInfoVO seatInfo : seatInfos) {
                 if (i >= seatsId.length) break;
-                if ((seatInfo.getSeatId() + "").equals(seatsId[i])) {
+                if (seatInfo.getSeatId() == seatsId[i]) {
                     seatsName.append(seatInfo.getRow() + "排" + seatInfo.getColumn() + "座 ");
                     i++;
                 }
@@ -140,7 +149,26 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderInfoVO> getOrderInfo(String userId, PageInfoVO pageInfoVO) {
         List<OrderInfoVO> orderInfos = orderTMapper.selectOrdersByUsername(userId,pageInfoVO);
-
+        for (OrderInfoVO orderInfo : orderInfos) {
+            // 将日期转化为时间戳
+            String orderTime = orderInfo.getOrderTime();
+            try {
+                Date parse = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(orderTime);
+                long time = parse.getTime() / 1000;
+                orderInfo.setOrderTimestamp(time + "");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            // 将数字订单状态，转化为真实订单状态
+            String orderStatus = orderInfo.getOrderStatus();
+            if (OrderStatusEnum.ORDER_STATUS_UNPAY.getIndex() == Integer.valueOf(orderStatus)) {
+                orderInfo.setOrderStatus(OrderStatusEnum.ORDER_STATUS_UNPAY.getMsg());
+            } else if (OrderStatusEnum.ORDER_STATUS_PAY.getIndex() == Integer.valueOf(orderStatus)) {
+                orderInfo.setOrderStatus(OrderStatusEnum.ORDER_STATUS_PAY.getMsg());
+            } else if (OrderStatusEnum.ORDER_STATUS_CLOSE.getIndex() == Integer.valueOf(orderStatus)) {
+                orderInfo.setOrderStatus(OrderStatusEnum.ORDER_STATUS_CLOSE.getMsg());
+            }
+        }
         return orderInfos;
     }
 
